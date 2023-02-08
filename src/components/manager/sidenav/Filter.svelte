@@ -32,12 +32,10 @@
       </label>
     {/each}
     <div class="button-group">
-      <div class="test">
-        <button
-          class="secondary-button search-button"
-          on:click={handleFilterReset}>reset filters</button
-        >
-      </div>
+      <button
+        class="secondary-button search-button"
+        on:click={handleFilterReset}>reset filters</button
+      >
     </div>
   </form>
 {:else}
@@ -80,5 +78,6 @@
   button {
     margin-top: 16px;
     max-width: 200px;
+    margin-left: auto;
   }
 </style>

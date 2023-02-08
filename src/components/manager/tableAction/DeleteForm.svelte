@@ -22,14 +22,19 @@
     <h2>{key}</h2>
   </div>
 
-  <button class="primary-button" on:click={handleDelete}
-    >Delete Site Entry</button
-  >
+  <div class='button-group'>
+    <button class="primary-button" on:click={handleDelete}
+      >Delete Site Entry</button
+    >
+  </div>
 </div>
 
 <style>
+  h2 {
+    font-weight: normal;
+  }
   button {
-    margin: 12px;
+    margin-left: auto;
   }
 
   .head-container {

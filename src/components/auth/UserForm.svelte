@@ -67,7 +67,9 @@
     bind:value={validatePassphrase}
   />
   <div class="button-group">
-    <button >Submit</button>
+    <button class:small-screen={!isNewUser} class="primary-button"
+      >Submit</button
+    >
   </div>
 </form>
 

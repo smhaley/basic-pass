@@ -222,4 +222,48 @@
     justify-content: center;
     align-items: center;
   }
+
+  table tbody th {
+    font-weight: 100;
+    font-style: italic;
+    text-align: left;
+    position: relative;
+  }
+  table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--bg-color);
+    border-bottom: 3px solid var(--green);
+
+    /* box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.3); */
+  }
+
+  table thead th:first-child {
+    position: sticky;
+    border-right: 3px solid var(--green);
+    left: 0;
+    z-index: 2;
+  }
+  table tbody th {
+    position: sticky;
+    left: 0;
+    /* background: white; */
+    z-index: 5;
+  }
+
+  table thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+  table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 66;
+    border-right: -3px solid var(--green);
+
+    /* background-color: aliceblue; */
+    background: var(--bg-color);
+  }
 </style>

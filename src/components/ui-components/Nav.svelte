@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { userStore } from "../../stores/store";
   import { logout } from "../../actions/authActions";
   import Sun from "svelte-material-icons/WhiteBalanceSunny.svelte";
   import Moon from "svelte-material-icons/MoonWaxingCrescent.svelte";
   import Github from "svelte-material-icons/Github.svelte";
-  let theme: "dark" | "light" = "dark";
+  type Theme = "light" | "dark";
+
+  let theme: Theme = (localStorage.getItem("theme") as Theme) || "dark";
 
   const themeHandler = () => {
     if (theme === "dark") {
@@ -12,6 +13,7 @@
     } else {
       theme = "dark";
     }
+    localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
   };
 </script>
@@ -26,7 +28,7 @@
         <a
           class="icon-button icon-link-button"
           target="_blank"
-          href="http://www.github.com"
+          href="http://www.github.com/smhaley/basic-pass"
           rel="noreferrer"
         >
           <Github size={"1.9em"} />
@@ -78,10 +80,12 @@
   }
 
   .nav-panel {
+    padding-top: 6px;
     padding-right: 50px;
     flex-shrink: 0;
     transition: 0.1s ease-in-out;
   }
+
   li {
     display: inline-block;
     padding: 0 1rem;

@@ -32,6 +32,6 @@
 <style>
   h1,
   button {
-    margin: 12px;
+    margin: 12px 0;
   }
 </style>

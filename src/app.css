@@ -108,20 +108,9 @@ textarea {
 }
 
 button {
-  color: #ccc;
   padding: 12px 15px;
   font-size: 1.2rem;
-  font-weight: 500;
-  outline: none;
-  transition: 0.1s ease-in-out;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-button {
-  padding: 12px 15px;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   outline: none;
   transition: 0.1s ease-in-out;
   cursor: pointer;
@@ -219,25 +208,6 @@ label {
 input[type="checkbox"] {
   accent-color: var(--light-blue);
 }
-
-/* 
-button:disabled {
-	color: #999;
-}
-
-button:not(:disabled):active {
-	background-color: var(--light);
-	border: 1px solid var(--purple);
-} */
-
-/* button:focus {
-	background-color: var(--light);
-	border: 1px solid var(--purple);
-} */
-
-/* light: #f8f8f8
-   dark:  #1a1a1a 
-*/
 
 .icon-button {
   color: inherit;

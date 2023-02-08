@@ -31,7 +31,7 @@
 
 <style>
   div {
-    min-height: 500px;
+    min-height: 510px;
     overflow: auto;
     min-width: 500px;
   }
