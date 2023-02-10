@@ -6,14 +6,6 @@
 
 <Nav />
 <SideNav />
-<main class="table-container">
+<main>
   <Table />
 </main>
-
-<style>
-  .table-container {
-/* height: 100%; */
-    padding: 16px;
-
-  }
-</style>
