@@ -34,5 +34,5 @@ export const availableFilters = derived(tableStore, ($tableStore) => {
 
 export const tableSize = derived(
   tableStore,
-  ($tableStore) => Object.keys($tableStore).length
+  ($tableStore) => $tableStore && Object.keys($tableStore).length
 );

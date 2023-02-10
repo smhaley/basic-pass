@@ -144,16 +144,10 @@
 </Modal>
 
 <style>
-  .table-container {
-    position: fixed;
-    left: 100px;
-    right: 0;
-    margin-top: 16px;
-  }
-
   table {
     border-collapse: collapse;
     table-layout: fixed;
+    /* height: 100px; */
   }
 
   td,
@@ -204,14 +198,35 @@
   }
 
   .table-item {
-    overflow-x: scroll;
-    padding-bottom: 16px;
+    /* overflow-x: scroll; */
+    /* max-height: 100vh; */
+    /* padding-bottom: 16px; */
+    /* width: ; */
   }
 
   .table-content {
+    overflow: auto;
     justify-content: center;
     display: flex;
-    max-width: calc(100%-110px);
+    /* height: 70%; */
+    /* height: calc(90vh-100px); */
+    height: calc(100vh - 100px);
+    /* max-width: calc(100%-110px); */
+    /* width: 98%; */
+    background-color: aliceblue;
+  }
+
+  .table-container {
+    background-color: blue;
+    /* position: fixed;
+    left: 100px;
+    
+    top:71;
+    right: 0;
+    margin-top: 16px; */
+    margin-left: 80px;
+    height: 100%;
+    /* margin-top: 120px; */
   }
 
   .empty-results {
@@ -225,7 +240,6 @@
 
   table tbody th {
     font-weight: 100;
-    font-style: italic;
     text-align: left;
     position: relative;
   }
@@ -234,36 +248,35 @@
     top: 0;
     z-index: 1;
     background: var(--bg-color);
-    border-bottom: 3px solid var(--green);
+    border-bottom: 1px solid var(--green);
 
     /* box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.3); */
   }
 
   table thead th:first-child {
     position: sticky;
-    border-right: 3px solid var(--green);
+    /* border-right: 3px solid var(--green); */
     left: 0;
     z-index: 2;
   }
   table tbody th {
     position: sticky;
     left: 0;
-    /* background: white; */
-    z-index: 5;
+    z-index: 2;
+    border-bottom: 1px solid var(--green);
   }
 
   table thead th:first-child {
     position: sticky;
     left: 0;
-    z-index: 2;
+    z-index: 4;
+    box-shadow: inset -1px 0 0px 0px var(--green);
   }
   table tbody th {
     position: sticky;
     left: 0;
-    z-index: 66;
-    border-right: -3px solid var(--green);
-
-    /* background-color: aliceblue; */
+    z-index: 3;
+    box-shadow: inset -1px 0 0px 0px var(--green);
     background: var(--bg-color);
   }
 </style>

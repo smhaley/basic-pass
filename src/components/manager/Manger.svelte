@@ -6,27 +6,14 @@
 
 <Nav />
 <SideNav />
-<Table />
-<!-- <div class="table-content">
-  <div class="main-container">
+<main class="table-container">
+  <Table />
+</main>
 
-  </div>
-</div> -->
-
-<!-- <div class="main-container">
-  <div class="table-container">
-    <div class="table-content" />
-  </div>
-</div> -->
 <style>
-  .main-container {
-    display: flex;
-    justify-content: center;
-  }
-  .table-content {
-    position: fixed;
-    left: 50px;
-    width: 100%;
-    margin-top: 16px;
+  .table-container {
+/* height: 100%; */
+    padding: 16px;
+
   }
 </style>

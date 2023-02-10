@@ -120,7 +120,7 @@
     border-right: 1px solid var(--green);
     width: 450px;
     position: fixed;
-    z-index: 1;
+    z-index: 9;
     top: 70px;
     bottom: 0;
     left: 0;
