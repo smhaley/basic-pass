@@ -38,3 +38,23 @@ export const fuzzyMatch = (pattern: string, str: string) => {
   const re = new RegExp(pattern);
   return re.test(str);
 };
+
+export const sortBySite = (
+  tableData: TableData,
+  direction: "ascending" | "descending"
+) => {
+  if (!tableData) return;
+
+  const table = deepCopyTable(tableData);
+  let tableKeys = Object.keys(table);
+
+  let sortedOutput: TableData = {};
+
+  const sortedTableKeys = tableKeys.sort();
+
+  if (direction === "descending") {
+    sortedTableKeys.reverse();
+  }
+  sortedTableKeys.forEach((key) => (sortedOutput[key] = table[key]));
+  return sortedOutput;
+};

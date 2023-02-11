@@ -1,7 +1,7 @@
 import { writable, derived } from "svelte/store";
 import type { Writable } from "svelte/store";
 import { createUserStore } from "./userStore";
-import { filterTableByTag, filterBySearch } from "./utils";
+import { filterTableByTag, filterBySearch, sortBySite } from "./utils";
 
 import { createTableStore, type TableEntry } from "./tableStore";
 
@@ -10,16 +10,22 @@ export const currentSearch: Writable<string> = writable();
 
 export const sideNavOpen: Writable<boolean> = writable(false);
 
+export const tableSort: Writable<"ascending" | "descending"> =
+  writable("ascending");
+
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
 
 export const tableResults = derived(
-  [tableStore, appliedFilters, currentSearch],
+  [tableStore, appliedFilters, currentSearch, tableSort],
 
-  ([$tableStore, $appliedFilters, $currentSearch]) => {
-    return filterBySearch(
-      filterTableByTag($tableStore, $appliedFilters),
-      $currentSearch
+  ([$tableStore, $appliedFilters, $currentSearch, $tableSort]) => {
+    return sortBySite(
+      filterBySearch(
+        filterTableByTag($tableStore, $appliedFilters),
+        $currentSearch
+      ),
+      $tableSort
     );
   }
 );

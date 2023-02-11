@@ -4,12 +4,15 @@
   import More from "svelte-material-icons/DotsHorizontal.svelte";
   import ContentCopy from "svelte-material-icons/ContentCopy.svelte";
   import Modal from "../../lib/Modal.svelte";
+  import Up from "svelte-material-icons/MenuUp.svelte";
+
   import {
     tableStore,
     tableResults,
     appliedFilters,
     currentSearch,
     tableSize,
+    tableSort,
   } from "../../stores/store";
   import TableAction from "./tableAction/TableAction.svelte";
 
@@ -23,11 +26,21 @@
   let currentSiteKey: string;
 
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
-  let emptyTableMessage: string;
+  let emptyTableMessage: string = "";
+
+  $: tableResultsSize = $tableResults ? Object.keys($tableResults).length : 0;
 
   const dataCols = ["user", "date", "tag"];
   const buttonCols = ["passphrase", "actions"];
   const tableCols = ["site", ...dataCols, ...buttonCols];
+
+  const handleSiteSort = () => {
+    if ($tableSort === "descending") {
+      tableSort.set("ascending");
+    } else {
+      tableSort.set("descending");
+    }
+  };
 
   const getRowDataByKey = (key: string) => {
     const rowObj = { ...$tableStore[key] };
@@ -40,7 +53,6 @@
   const handlePassClick = (siteKey: string) => {
     showSnack = true;
     if ($tableStore && $tableStore[siteKey]) {
-      console.log($tableStore[siteKey].passphrase);
       navigator.clipboard.writeText($tableStore[siteKey].passphrase);
     }
   };
@@ -48,7 +60,6 @@
   const handleMoreClick = (site: string) => {
     isOpen = true;
     currentSiteKey = site;
-    console.log(site);
   };
 
   const handleSnackClose = (e: CustomEvent<{ show: boolean }>) =>
@@ -84,17 +95,29 @@
 <div class="table-container">
   {#if $tableResults && $tableSize > 0}
     <div class="table-content">
-      <div>
+      <div class="table-item">
         <table>
           <thead>
             <tr>
               {#each tableCols as col}
                 <th
+                  style="height:52px;"
+                  class="header-cell"
                   class:site-col={col === "site"}
                   class:data-cols={dataCols.includes(col)}
                   class:button-cols={buttonCols.includes(col)}
-                  class="header-row">{col}</th
-                >
+                  >{col}
+                  {#if col === "site" && tableResultsSize > 1}
+                    <button
+                      class="icon-button"
+                      on:click={handleSiteSort}
+                      style="padding-left: 10px;"
+                      class:active-sort={$tableSort === "ascending"}
+                    >
+                      <Up size={"2rem"} />
+                    </button>
+                  {/if}
+                </th>
               {/each}
             </tr>
             <thead />
@@ -222,6 +245,10 @@
     align-items: center;
   }
 
+  .table-item {
+    overflow-x: scroll;
+  }
+
   table tbody th {
     font-weight: 100;
     text-align: left;
@@ -262,5 +289,13 @@
 
   table > tbody > tr:last-child > th {
     box-shadow: inset -1px 0 0px 0px var(--green);
+  }
+
+  .active-sort {
+    transform: rotate(180deg);
+  }
+
+  .header-cell {
+    height: 52px;
   }
 </style>
