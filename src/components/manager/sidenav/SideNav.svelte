@@ -22,13 +22,26 @@
   let closeButtonRef: HTMLButtonElement;
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
   let activeNavigation: string;
+  let activeToolTip: { position: number; label: string };
 
   const navButtons = [
     { id: "search", label: "Open Search", component: Search },
     { id: "filter", label: "Open Filters", component: Filter },
-    { id: "newEntry", label: "Open New Entry", component: Lock },
-    { id: "account", label: "Open account settings", component: Account },
+    {
+      id: "newEntry",
+      label: "Open New Entry",
+      component: Lock,
+    },
+    {
+      id: "account",
+      label: "Open account settings",
+      component: Account,
+    },
   ];
+
+  const handleToolTip = (position: number, label: string) => {
+    activeToolTip = { position, label };
+  };
 
   const sideNavigation = {
     search: SiteSearch,
@@ -41,6 +54,7 @@
     isOpen = true;
     sideNavOpen.set(true);
     activeNavigation = icon;
+    activeToolTip = undefined;
   };
 
   const handleEsc = (e: KeyboardEvent) => e.key === "Escape" && handleClose();
@@ -89,6 +103,12 @@
       {#each navButtons as navButton}
         <div class="icon-item" in:fade={{ delay: 90 }}>
           <button
+            on:mouseenter={() =>
+              handleToolTip(
+                buttonRefs[navButton.id].getBoundingClientRect().top,
+                navButton.label
+              )}
+            on:mouseleave={() => (activeToolTip = undefined)}
             bind:this={buttonRefs[navButton.id]}
             aria-label={navButton.label}
             class="icon-button"
@@ -113,6 +133,12 @@
 </div>
 {#if isOpen}
   <aside in:fade={{ delay: 50 }} />
+{/if}
+
+{#if activeToolTip}
+  <div class="tooltip" style={`top: ${activeToolTip.position + 6}px`}>
+    {activeToolTip.label}
+  </div>
 {/if}
 
 <style>
@@ -151,6 +177,7 @@
 
   .icon-item {
     padding: 10px;
+    font-size: 0.8rem;
   }
 
   aside {
@@ -165,6 +192,21 @@
     justify-content: center;
     padding: 20px;
     z-index: 9;
+  }
+
+  .tooltip {
+    position: fixed;
+    border-radius: 5px;
+    left: 71px;
+    background: var(--dark-color);
+    color: var(--light-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    z-index: 9999;
+    text-transform: capitalize;
+    font-weight: bold;
   }
 
   .engaged-icon {
