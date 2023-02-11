@@ -25,16 +25,16 @@
   let activeToolTip: { position: number; label: string };
 
   const navButtons = [
-    { id: "search", label: "Open Search", component: Search },
-    { id: "filter", label: "Open Filters", component: Filter },
+    { id: "search", label: "Search", component: Search },
+    { id: "filter", label: "Filters", component: Filter },
     {
       id: "newEntry",
-      label: "Open New Entry",
+      label: "New Entry",
       component: Lock,
     },
     {
       id: "account",
-      label: "Open account settings",
+      label: "account settings",
       component: Account,
     },
   ];
@@ -110,7 +110,7 @@
               )}
             on:mouseleave={() => (activeToolTip = undefined)}
             bind:this={buttonRefs[navButton.id]}
-            aria-label={navButton.label}
+            aria-label={`Open ${navButton.label}`}
             class="icon-button"
             class:engaged-icon={hasActiveFilter(navButton.id)}
             on:click={() => handleIconClick(navButton.id)}
@@ -136,7 +136,7 @@
 {/if}
 
 {#if activeToolTip}
-  <div class="tooltip" style={`top: ${activeToolTip.position + 6}px`}>
+  <div class="tooltip" style={`top: ${activeToolTip.position + 8}px`}>
     {activeToolTip.label}
   </div>
 {/if}
@@ -198,13 +198,13 @@
     position: fixed;
     border-radius: 5px;
     left: 71px;
-    background: var(--dark-color);
-    color: var(--light-color);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-color);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px;
-    z-index: 9999;
+    z-index: 999;
     text-transform: capitalize;
     font-weight: bold;
   }

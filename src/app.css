@@ -5,8 +5,8 @@
   --link-white-color: #c1bfbd;
   --icon-hov-color-primary: rgba(255, 255, 255, 0.08);
   --bg-color: #333;
-  --dark-color: #333;
-  --light-color: #c1bfbd;
+  --tooltip-bg: #c1bfbd;
+  --tooltip-color: #333;
   --bg-secondary: #424242;
   --table-header: #424242;
   --pink: #e91e63;
@@ -60,6 +60,8 @@
   --bg-secondary: #f3f0f0;
   --icon-hov-color-primary: rgba(0, 0, 0, 0.04);
   --active-green-tab: #087132;
+  --tooltip-bg: #333;
+  --tooltip-color: #c1bfbd;
 }
 
 html,
