@@ -3,6 +3,8 @@
   import type { SiteData } from "../../../actions/tableDataActions";
   import { tableStore } from "../../../stores/store";
   import { createEventDispatcher } from "svelte";
+  import { handleSrcTableUpdate } from "../../../utils/crypto/encrypt";
+  import { userStore } from "../../../stores/store";
 
   const dispatch = createEventDispatcher();
 
@@ -17,7 +19,8 @@
     if (isSiteInStore) {
       siteExistsError = true;
     } else {
-      tableStore.addTableEntry(site, tableEntry);
+      const updateTableData = tableStore.addTableEntry(site, tableEntry);
+      handleSrcTableUpdate(updateTableData, $userStore.passphrase);
       dispatch("close");
     }
   };

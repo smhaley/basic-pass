@@ -4,6 +4,12 @@
   import InputSection from "../../lib/InputSection.svelte";
   import type { UserAction } from "../../actions/authActions";
 
+  export let existingUsers: string[];
+  export let incorrectPassphrase = false;
+
+  $: incorrectPassphrase,
+    (passphraseError = { ...passphraseError, invalid: incorrectPassphrase });
+
   let username: string;
   let passphrase: string;
 
@@ -14,17 +20,13 @@
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
-    usernameError = ErrorUtils.validateUser(username);
+    usernameError = ErrorUtils.validateExistingUser(username, existingUsers);
     passphraseError = ErrorUtils.validatePassphrase(passphrase);
-    //todo update below method name
     if (ErrorUtils.doesErrorExist([usernameError, passphraseError])) {
-      
-      console.log('bbbbb')
       dispatch("userData", {
         username,
         passphrase,
       });
-      console.log("fire dispatch");
     }
   };
 </script>
@@ -33,7 +35,7 @@
   <InputSection
     label={"Username"}
     errs={usernameError}
-    errMsgs={ErrorUtils.usernameErrMsgs}
+    errMsgs={ErrorUtils.loginUserErrMsgs}
     bind:value={username}
   />
   <InputSection

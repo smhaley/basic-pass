@@ -23,6 +23,11 @@ export const loginPassErrMsgs = {
   missing: "Passphrase required",
 };
 
+export const loginUserErrMsgs = {
+  invalid: "Username does not exist on this system",
+  missing: "Username required",
+};
+
 export const validatePassErrMsgs = {
   invalid: "Passphrase does note match",
   missing: "Passphrase required",
@@ -69,8 +74,18 @@ export const validateUser = (username: string, existingUsers?: string[]) => {
   return { missing, invalid };
 };
 
+export const validateExistingUser = (
+  username: string,
+  existingUsers: string[]
+) => {
+  const missing = !username || !username.length;
+  let invalid = !existingUsers.some((val) => val === username);
+
+  return { missing, invalid };
+};
+
 export const validateText = (val: string, invalid?: boolean) => {
-  const missing = !val || !val.length ;
+  const missing = !val || !val.length;
   return { missing, invalid: false };
 };
 

@@ -13,9 +13,7 @@ export type TableData = {
   [key: string]: TableEntry;
 };
 
-export const mockTable: TableData = {
- 
-};
+export const mockTable: TableData = {};
 
 export type TableStore = {
   tableData: TableData;
@@ -31,28 +29,34 @@ export const createTableStore = () => {
     subscribe,
     setTableData: (table: TableData) => set(table),
     addTableEntry: (site: string, tableData: TableEntry) => {
+      let table: TableData;
       update((table) => {
         const updatedTable = { ...table, [site]: tableData };
-        console.log("perform store save here", tableData);
+        table = updatedTable;
         return updatedTable;
       });
+      return table;
     },
     updateTableKey: (key: string, tableData: TableEntry) => {
+      let table: TableData;
       update((table) => {
         const updatedTable = { ...table, [key]: tableData };
-        console.log("perform store save here", tableData);
+        table = updatedTable;
         return updatedTable;
       });
+
+      return table;
     },
-    deleteTableKey: (key: string) =>
+    deleteTableKey: (key: string) => {
+      let table: TableData;
       update((table) => {
         const tableData = deepCopyTable(table);
         delete tableData[key];
-        console.log("save updated store here");
+        table = tableData;
         return tableData;
-      }),
+      });
+      return table;
+    },
     destroyTable: () => set(null),
   };
 };
-
-// export const tableStore = createTableStore();

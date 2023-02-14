@@ -84,7 +84,6 @@
         <input
           type="checkbox"
           on:click={() => {
-            console.log(showPassInput);
             showPassInput = !showPassInput;
           }}
         />

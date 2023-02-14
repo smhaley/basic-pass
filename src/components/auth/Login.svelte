@@ -1,11 +1,13 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
+  import { onMount } from "svelte";
   import type { User } from "../../actions/authActions";
   import UserForm from "./UserForm.svelte";
   import LoginForm from "./LoginForm.svelte";
   import UserLoginSection from "./UserLoginSection.svelte";
   import { userStore, tableStore } from "../../stores/store";
   import { mockTable } from "../../stores/tableStore";
+  import { BasicCrypto } from "../../utils/crypto/encrypt";
 
   let loginView = true;
 
@@ -16,31 +18,39 @@
   const loginStateHandler = (e) => (loginView = e.detail.loginState);
 
   const handleUserLogin = async (e: CustomEvent<User>) => {
-    ///do some validation
-    // tableData.set(mockTable);
-    tableStore.setTableData(mockTable);
-    userStore.loginUser(e.detail.username);
-    // userStore.set({
-    //   username: e.detail.username,
-    //   isAuthenticated: true,
-    // });
-
-    console.log(userStore);
+    incorrectPassphrase = false;
+    const { username, passphrase } = e.detail;
+    try {
+      const basicCrypto = new BasicCrypto(passphrase);
+      const table = await basicCrypto.login(username);
+      userStore.loginUser(username, passphrase);
+      tableStore.setTableData(table);
+    } catch {
+      incorrectPassphrase = true;
+    }
   };
 
-  const handleNewUser = (e: CustomEvent<User>) => {
-    ///create new user here file
-    //create empty tab;e
-
+  const handleNewUser = async (e: CustomEvent<User>) => {
+    const { username, passphrase } = e.detail;
+    await BasicCrypto.createNewUserStore(username, passphrase);
+    existingUsers = await BasicCrypto.getStoreNames();
     loginView = true;
   };
+
+  onMount(async () => {
+    existingUsers = await BasicCrypto.getStoreNames();
+  });
 </script>
 
 <div class="container">
   {#if loginView}
     <div in:fade class="login-container">
       <UserLoginSection on:loginState={loginStateHandler} isNewUser={false}>
-        <LoginForm on:userData={handleUserLogin} />
+        <LoginForm
+          on:userData={handleUserLogin}
+          {existingUsers}
+          {incorrectPassphrase}
+        />
       </UserLoginSection>
     </div>
   {:else}

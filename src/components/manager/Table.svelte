@@ -5,7 +5,10 @@
   import ContentCopy from "svelte-material-icons/ContentCopy.svelte";
   import Modal from "../../lib/Modal.svelte";
   import Up from "svelte-material-icons/MenuUp.svelte";
-
+  import { userStore } from "../../stores/store";
+  import {
+    handleSrcTableUpdate,
+  } from "../../utils/crypto/encrypt";
   import {
     tableStore,
     tableResults,
@@ -66,14 +69,16 @@
     (showSnack = e.detail.show);
 
   const handleTableDelete = (e: CustomEvent<DeleteTableEntry>) => {
-    tableStore.deleteTableKey(e.detail.siteKey);
+    const updateTableData = tableStore.deleteTableKey(e.detail.siteKey);
+    handleSrcTableUpdate(updateTableData, $userStore.passphrase);
     isOpen = false;
   };
 
   const handleTableUpdate = (e: CustomEvent<SiteData>) => {
     const { username, passphrase, timestamp, site, tag } = e.detail;
     const tableEntry = { username, passphrase, timestamp, tag };
-    tableStore.updateTableKey(site, tableEntry);
+    const updateTableData = tableStore.updateTableKey(site, tableEntry);
+    handleSrcTableUpdate(updateTableData, $userStore.passphrase);
     isOpen = false;
   };
 
@@ -87,7 +92,6 @@
   };
 
   afterUpdate(() => {
-    console.log($tableResults);
     emptyTableMessage = generateEmptyTableMessage();
   });
 </script>

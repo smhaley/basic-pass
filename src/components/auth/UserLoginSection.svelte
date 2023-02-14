@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  // import ShieldLock from "svelte-material-icons/ShieldLock.svelte";
 
   export let isNewUser: boolean;
 
