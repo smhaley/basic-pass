@@ -6,14 +6,13 @@
   import LoginForm from "./LoginForm.svelte";
   import UserLoginSection from "./UserLoginSection.svelte";
   import { userStore, tableStore } from "../../stores/store";
-  import { mockTable } from "../../stores/tableStore";
   import { BasicCrypto } from "../../utils/crypto/encrypt";
 
   let loginView = true;
 
   let existingUsers = [];
-  let loading = false;
   let incorrectPassphrase = false;
+
   //todo add types here
   const loginStateHandler = (e) => (loginView = e.detail.loginState);
 
@@ -21,12 +20,13 @@
     incorrectPassphrase = false;
     const { username, passphrase } = e.detail;
     try {
-      const basicCrypto = new BasicCrypto(passphrase);
-      const table = await basicCrypto.login(username);
+      const basicCrypto = new BasicCrypto(passphrase, username);
+      const table = await basicCrypto.login();
       userStore.loginUser(username, passphrase);
       tableStore.setTableData(table);
-    } catch {
+    } catch (e) {
       incorrectPassphrase = true;
+      throw Error(e);
     }
   };
 

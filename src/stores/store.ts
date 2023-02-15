@@ -10,6 +10,10 @@ export const currentSearch: Writable<string> = writable();
 
 export const sideNavOpen: Writable<boolean> = writable(false);
 
+export const tempEncStore: Writable<string> = writable(
+  "U2FsdGVkX19GAvnitrOrB/hrpzTTW/kppSSv9mPGQsQ="
+);
+
 export const tableSort: Writable<"ascending" | "descending"> =
   writable("ascending");
 

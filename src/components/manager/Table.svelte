@@ -7,7 +7,7 @@
   import Up from "svelte-material-icons/MenuUp.svelte";
   import { userStore } from "../../stores/store";
   import {
-    handleSrcTableUpdate,
+    BasicCrypto,
   } from "../../utils/crypto/encrypt";
   import {
     tableStore,
@@ -70,7 +70,11 @@
 
   const handleTableDelete = (e: CustomEvent<DeleteTableEntry>) => {
     const updateTableData = tableStore.deleteTableKey(e.detail.siteKey);
-    handleSrcTableUpdate(updateTableData, $userStore.passphrase);
+    BasicCrypto.handleSrcTableUpdate(
+      updateTableData,
+      $userStore.passphrase,
+      $userStore.username
+    );
     isOpen = false;
   };
 
@@ -78,7 +82,11 @@
     const { username, passphrase, timestamp, site, tag } = e.detail;
     const tableEntry = { username, passphrase, timestamp, tag };
     const updateTableData = tableStore.updateTableKey(site, tableEntry);
-    handleSrcTableUpdate(updateTableData, $userStore.passphrase);
+    BasicCrypto.handleSrcTableUpdate(
+      updateTableData,
+      $userStore.passphrase,
+      $userStore.username
+    );
     isOpen = false;
   };
 

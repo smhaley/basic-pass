@@ -3,7 +3,7 @@
   import type { SiteData } from "../../../actions/tableDataActions";
   import { tableStore } from "../../../stores/store";
   import { createEventDispatcher } from "svelte";
-  import { handleSrcTableUpdate } from "../../../utils/crypto/encrypt";
+  import { BasicCrypto } from "../../../utils/crypto/encrypt";
   import { userStore } from "../../../stores/store";
 
   const dispatch = createEventDispatcher();
@@ -11,7 +11,7 @@
   let currentSites: string[] | undefined = Object.keys($tableStore);
   let siteExistsError = false;
 
-  const handleNewEntry = (e: CustomEvent<SiteData>) => {
+  const handleNewEntry = async (e: CustomEvent<SiteData>) => {
     const { username, passphrase, timestamp, site, tag } = e.detail;
     const tableEntry = { username, passphrase, timestamp, tag };
 
@@ -20,7 +20,11 @@
       siteExistsError = true;
     } else {
       const updateTableData = tableStore.addTableEntry(site, tableEntry);
-      handleSrcTableUpdate(updateTableData, $userStore.passphrase);
+      BasicCrypto.handleSrcTableUpdate(
+        updateTableData,
+        $userStore.passphrase,
+        $userStore.username
+      );
       dispatch("close");
     }
   };

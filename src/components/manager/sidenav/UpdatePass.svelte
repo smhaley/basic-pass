@@ -10,10 +10,12 @@
   const handleUpdate = (e: CustomEvent<User>) => {
     const { passphrase } = e.detail;
     userStore.updatePass(passphrase);
-    const basicCrypto = new BasicCrypto(passphrase);
-    const text = basicCrypto.encryptTable($tableStore);
-    console.log(text);
-    console.log(basicCrypto.decryptTable(text));
+
+    BasicCrypto.handleSrcTableUpdate(
+      $tableStore,
+      passphrase,
+      $userStore.username
+    );
     dispatch("close");
   };
 </script>

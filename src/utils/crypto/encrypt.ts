@@ -3,11 +3,11 @@ import type { TableData } from "../../stores/tableStore";
 
 export class BasicCrypto {
   passphrase: string;
-  demoEncString =
-    "U2FsdGVkX1/bgWGDJ/3RGXuHHtHIkxI90YSMQzAxRQwxDpv7wGit07ZuPG+ZCUsdI/2JoKIHTirCbGqmehLg5GGTDdwcqBxMpV4CjPWYiAPVBjctXuC9rYpJAb8c/T6eXrc7RkldlIb4VXGeMw0UIg==";
+  username: string;
 
-  constructor(passphrase: string) {
+  constructor(passphrase: string, username: string) {
     this.passphrase = passphrase;
+    this.username = username;
   }
 
   encryptTable = (tableData: TableData) => {
@@ -15,54 +15,46 @@ export class BasicCrypto {
       JSON.stringify(tableData),
       this.passphrase
     ).toString();
-    //do electron function here to
-    // 1. overwrite existing store with new store
-
     return cypherText;
   };
 
   decryptTable = (cypherText: string) => {
     const bytes = CryptoJS.AES.decrypt(cypherText, this.passphrase);
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-
     return decryptedData;
 
-    //try catch with error handling
   };
 
   updateUserStore = (tableData: TableData) => {
     const encryptedTable = this.encryptTable(tableData);
-
-    //store encrypted
-    console.log("store the cypherText here", encryptedTable);
+    window.BasicPass.upsertUserStore([this.username, encryptedTable]);
   };
 
-  getUserStore = async (userName: string) => {
-    console.log("getting store: ", userName);
-    return await Promise.resolve(this.demoEncString);
+  getUserStore = async () => {
+    return await window.BasicPass.getUserStore([this.username]);
   };
 
-  static getStoreNames = async () => {
-    return await Promise.resolve(["shawn", "joe"]);
-  };
-
-  login = async (userName: string) => {
-    const store = await this.getUserStore(userName);
+  login = async () => {
+    const store = await this.getUserStore();
     return this.decryptTable(store);
   };
 
   static createNewUserStore = async (username: string, passphrase: string) => {
-    console.log("creating new user. need to block on this one", {
-      username,
-      passphrase,
-    });
+    const basicCrypto = new BasicCrypto(passphrase, username);
+    const initialTableCypher = basicCrypto.encryptTable({});
+    await window.BasicPass.createNewUserStore([username, initialTableCypher]);
+  };
+
+  static getStoreNames = async () => {
+    return await window.BasicPass.getStoreList();
+  };
+
+  static handleSrcTableUpdate = (
+    tableData: TableData,
+    passphrase: string,
+    username: string
+  ) => {
+    const basicPass = new BasicCrypto(passphrase, username);
+    basicPass.updateUserStore(tableData);
   };
 }
-
-export const handleSrcTableUpdate = (
-  tableData: TableData,
-  passphrase: string
-) => {
-  const basicPass = new BasicCrypto(passphrase);
-  basicPass.updateUserStore(tableData);
-};
