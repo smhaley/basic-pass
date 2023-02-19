@@ -14,7 +14,7 @@ export const usernameErrMsgs = {
 };
 
 export const passPhraseErrMsgs = {
-  invalid: "Passphrase must be longer than two chars",
+  invalid: "",
   missing: "Passphrase required",
 };
 
@@ -54,7 +54,7 @@ export const validatePassphrase = (passphrase: string) => {
   const missing = !passphrase || !passphrase.length;
   return {
     missing,
-    invalid: !missing && passphrase.length < 2,
+    invalid: !missing && passphrase.length < 1,
   };
 };
 export const validateValidationPassphrase = (

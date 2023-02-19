@@ -113,7 +113,6 @@
             <tr>
               {#each tableCols as col}
                 <th
-                  style="height:52px;"
                   class="header-cell"
                   class:site-col={col === "site"}
                   class:data-cols={dataCols.includes(col)}
@@ -123,7 +122,6 @@
                     <button
                       class="icon-button"
                       on:click={handleSiteSort}
-                      style="padding-left: 10px;"
                       class:active-sort={$tableSort === "ascending"}
                     >
                       <Up size={"2rem"} />
@@ -192,12 +190,12 @@
     background-color: var(--bg-primary);
     text-align: left;
     display: table-cell;
-    padding: 14px 30px;
+    padding: 8px 20px;
     overflow-wrap: break-word;
   }
   td {
-    max-width: 100px;
-    min-width: 100px;
+    max-width: 150px;
+    min-width: 150px;
   }
 
   thead {
@@ -207,7 +205,6 @@
   }
   tr {
     font-size: 1.1rem;
-    padding: 14px;
     line-height: 1.1rem;
     color: inherit;
     display: table-row;
@@ -219,6 +216,8 @@
   .icon-data {
     text-align: center;
     vertical-align: middle;
+    max-width: 70px;
+    min-width: 70px;
   }
 
   .site-col {

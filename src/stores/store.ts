@@ -46,3 +46,12 @@ export const tableSize = derived(
   tableStore,
   ($tableStore) => $tableStore && Object.keys($tableStore).length
 );
+
+export const logout = () => {
+  userStore.logout();
+  tableStore.destroyTable();
+  currentSearch.set(undefined);
+  appliedFilters.set([]);
+  sideNavOpen.set(false);
+  tableSort.set("ascending");
+};

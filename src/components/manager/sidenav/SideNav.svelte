@@ -5,12 +5,16 @@
   import Search from "svelte-material-icons/Magnify.svelte";
   import Close from "svelte-material-icons/Close.svelte";
   import Account from "svelte-material-icons/Account.svelte";
+  import ShipWheel from "svelte-material-icons/ShipWheel.svelte";
+  import DatabaseImport from "svelte-material-icons/DatabaseImport.svelte";
   import Lock from "svelte-material-icons/Lock.svelte";
   import TagFilter from "./Filter.svelte";
   import SiteSearch from "./Search.svelte";
   import NewSiteEntry from "./NewSiteEntry.svelte";
   import UpdatePass from "./UpdatePass.svelte";
   import { clickOutside } from "../../../utils/clickOutside";
+  import Export from "./Export.svelte";
+  import Import from "./Import.svelte";
   import {
     appliedFilters,
     currentSearch,
@@ -37,6 +41,16 @@
       label: "account settings",
       component: Account,
     },
+    {
+      id: "export",
+      label: "Export Table Data",
+      component: ShipWheel,
+    },
+    {
+      id: "import",
+      label: "Import Table Data",
+      component: DatabaseImport,
+    },
   ];
 
   const handleToolTip = (position: number, label: string) => {
@@ -48,6 +62,8 @@
     filter: TagFilter,
     newEntry: NewSiteEntry,
     account: UpdatePass,
+    export: Export,
+    import: Import,
   };
 
   const handleIconClick = (icon: string) => {

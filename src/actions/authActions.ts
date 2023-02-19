@@ -1,4 +1,4 @@
-import { tableStore, userStore } from "../stores/store";
+import { tableStore, userStore, logout as globalLogout } from "../stores/store";
 
 export type User = {
   username: string;
@@ -7,10 +7,7 @@ export type User = {
 
 export type UserAction = { userData: User };
 
-export const logout = () => {
-  userStore.logout();
-  tableStore.destroyTable();
-};
+export const logout = globalLogout;
 
 export const generateNewUserStore = () => {};
 

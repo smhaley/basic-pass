@@ -8,7 +8,7 @@
   export let type = "text";
 
   const typeAction = (node: HTMLInputElement) => {
-    node.type = type;
+  node.type = type;
   };
 </script>
 

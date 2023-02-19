@@ -13,8 +13,10 @@
   let existingUsers = [];
   let incorrectPassphrase = false;
 
-  //todo add types here
-  const loginStateHandler = (e) => (loginView = e.detail.loginState);
+  const loginStateHandler = (e: CustomEvent<{ loginState: boolean }>) => {
+    loginView = e.detail.loginState;
+    incorrectPassphrase = false;
+  };
 
   const handleUserLogin = async (e: CustomEvent<User>) => {
     incorrectPassphrase = false;
@@ -24,9 +26,8 @@
       const table = await basicCrypto.login();
       userStore.loginUser(username, passphrase);
       tableStore.setTableData(table);
-    } catch (e) {
+    } catch {
       incorrectPassphrase = true;
-      throw Error(e);
     }
   };
 

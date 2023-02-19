@@ -13,6 +13,7 @@
   --pink-dark: #c21858;
   --red: #e91e36;
   --red-dark: #c21826;
+  --red-hov: #ba2c38;
   --purple-light: #9c2780;
   --purple: #572780;
   --purple-hov: #5f3782;
@@ -96,6 +97,8 @@ label {
   display: block;
 }
 
+
+
 input,
 button,
 select,
@@ -110,7 +113,7 @@ textarea {
   border-radius: 2px;
 }
 
-button {
+button, .file-upload {
   padding: 12px 15px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -148,6 +151,21 @@ button {
 
 .secondary-button:focus {
   border: 1px solid var(--light-blue);
+}
+
+.danger-button {
+  color: #ccc;
+  background-color: var(--red-dark);
+  border: 1px solid  var(--red-dark);
+}
+
+.danger-button:hover {
+  background-color: var(--red-hov);
+  border: 1px solid var(--red);
+}
+
+.danger-button:focus {
+  border: 1px solid var(--red);
 }
 
 .primary-button:disabled,
