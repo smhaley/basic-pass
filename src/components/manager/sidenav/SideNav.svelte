@@ -14,7 +14,7 @@
   import UpdatePass from "./UpdatePass.svelte";
   import { clickOutside } from "../../../utils/clickOutside";
   import Export from "./Export.svelte";
-  import Import from "./Import.svelte";
+  import Import from "./import/Import.svelte";
   import {
     appliedFilters,
     currentSearch,

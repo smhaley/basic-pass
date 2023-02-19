@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { userStore, logout } from "../../../stores/store";
-  import { BasicCrypto } from "../../../utils/crypto/encrypt";
-  import * as ErrorUtils from "../../error-utils";
-  import InputSection from "../../../lib/InputSection.svelte";
-  import type { TableData, TableEntry } from "../../../stores/tableStore";
-  import { deepCopyTable } from "../../../stores/utils";
+  import { userStore, logout } from "../../../../stores/store";
+  import { BasicCrypto } from "../../../../utils/crypto/encrypt";
+  import * as ErrorUtils from "../../../error-utils";
+  import InputSection from "../../../../lib/InputSection.svelte";
+  import type { TableData, TableEntry } from "../../../../stores/tableStore";
+  import { deepCopyTable } from "../../../../stores/utils";
 
   let cypherText: string;
   let filename: string;
@@ -16,6 +16,7 @@
   let passphraseError: ErrorUtils.ErrObj = ErrorUtils.baseError;
 
   const handleUpload = () => {
+    handleImportAbort();
     const file = (
       document.querySelector("input[type=file]") as HTMLInputElement
     ).files[0];
@@ -29,7 +30,6 @@
       if (typeof inputCypher === "string") {
         cypherText = inputCypher;
         filename = file.name;
-        console.log(cypherText, filename);
       } else {
         window.alert("Please check your file and try again");
       }
@@ -39,7 +39,6 @@
   const handleStoreDecrypt = (e: Event) => {
     e.preventDefault();
     passphraseError = ErrorUtils.baseError;
-    //missing
     const validTextErr = ErrorUtils.validateText(storePass);
     if (!validTextErr.missing) {
       const basicCrypto = new BasicCrypto(storePass, $userStore.username);
@@ -53,25 +52,23 @@
         );
         previewData = JSON.stringify(tableCopy, null, 2);
       } catch (e) {
-        console.log(e);
         passphraseError = { ...ErrorUtils.baseError, invalid: true };
       }
     } else {
       passphraseError = validTextErr;
     }
-
-    //loginPassErrMsgs
   };
 
-  const handleCancel = () => {
+  const handleImportAbort = () => {
     cypherText = undefined;
     filename = undefined;
     storePass = undefined;
     decryptedTableData = undefined;
+    passphraseError = ErrorUtils.baseError;
   };
 
   const handleNewDataStore = async () => {
-    BasicCrypto.handleSrcTableUpdate(
+    await BasicCrypto.handleSrcTableUpdate(
       decryptedTableData,
       storePass,
       $userStore.username
@@ -105,56 +102,56 @@
       </label>
       <input id="file-upload" type="file" on:change={handleUpload} />
     </div>
-  {:else}
+  {:else if !decryptedTableData}
     <p class="current-file">
       Current file: {filename}
     </p>
-    {#if !decryptedTableData}
-      <form on:submit={handleStoreDecrypt}>
-        <InputSection
-          type="password"
-          label={"Import Store Password"}
-          errs={passphraseError}
-          errMsgs={ErrorUtils.loginPassErrMsgs}
-          bind:value={storePass}
-        />
+    <form on:submit={handleStoreDecrypt}>
+      <InputSection
+        type="password"
+        label={"Import Store Password"}
+        errs={passphraseError}
+        errMsgs={ErrorUtils.loginPassErrMsgs}
+        bind:value={storePass}
+      />
 
-        <div class="button-group">
-          <div class="button-child">
-            <button class="secondary-button" on:click={handleCancel}
-              >Cancel</button
-            >
-            <button class="primary-button">Submit</button>
-          </div>
+      <div class="button-group">
+        <div class="button-child">
+          <button class="secondary-button" on:click={handleImportAbort}
+            >Cancel</button
+          >
+          <button class="primary-button">Submit</button>
         </div>
-      </form>
-    {:else}
-      <p>Confirm User Store and Passphrase Override</p>
-      <p>Please verify the preview data below.</p>
-      <p>
-        On confirm, your current logged in store will be overwritten with the
-        store below.
-      </p>
-      <p>
-        Additionally the access passphrase will will become the passphrase used
-        to unlock the data below.
-      </p>
-      <p>
-        On confirm you will be logged out. On login you will see your uploaded
-        table data.
-      </p>
-      <p>Table preview with scrubbed passphrases:</p>
-      <div class="preview">
-        <pre>{previewData}</pre>
       </div>
-      <div class="button-group ">
-        <button class="danger-button overwrite" on:click={handleNewDataStore}>
-          Confirm Data and Passphrase Overwrite</button
-        >
-      </div>
-    {/if}
+    </form>
+  {:else}
+    <p>Confirm User Store and Passphrase Override</p>
+    <p>Please verify the preview data below.</p>
+    <p>
+      On confirm, your current logged in store will be overwritten with the
+      store below.
+    </p>
+    <p>
+      Additionally the access passphrase will will become the passphrase used to
+      unlock the data below.
+    </p>
+    <p>
+      On confirm you will be logged out. On login you will see your uploaded
+      table data.
+    </p>
+    <p>Table preview with scrubbed passphrases:</p>
+    <div class="preview">
+      <pre>{previewData}</pre>
+    </div>
+    <div class="button-group ">
+      <button class="danger-button overwrite" on:click={handleNewDataStore}>
+        Confirm Overwrite</button
+      >
+      <button class="secondary-button overwrite" on:click={handleImportAbort}>
+        Cancel</button
+      >
+    </div>
   {/if}
-  <form />
 </div>
 
 <style>

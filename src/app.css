@@ -161,7 +161,7 @@ button, .file-upload {
 
 .danger-button:hover {
   background-color: var(--red-hov);
-  border: 1px solid var(--red);
+  border: 1px solid var(--red-dark);
 }
 
 .danger-button:focus {

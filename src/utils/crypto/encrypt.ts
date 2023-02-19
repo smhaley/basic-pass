@@ -22,10 +22,9 @@ export class BasicCrypto {
     const bytes = CryptoJS.AES.decrypt(cypherText, this.passphrase);
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     return decryptedData;
-
   };
 
-  updateUserStore = (tableData: TableData) => {
+  updateUserStore = async (tableData: TableData) => {
     const encryptedTable = this.encryptTable(tableData);
     window.BasicPass.upsertUserStore([this.username, encryptedTable]);
   };
@@ -49,12 +48,12 @@ export class BasicCrypto {
     return await window.BasicPass.getStoreList();
   };
 
-  static handleSrcTableUpdate = (
+  static handleSrcTableUpdate = async (
     tableData: TableData,
     passphrase: string,
     username: string
   ) => {
     const basicPass = new BasicCrypto(passphrase, username);
-    basicPass.updateUserStore(tableData);
+    await basicPass.updateUserStore(tableData);
   };
 }
