@@ -14,7 +14,6 @@
 
 <div>
   {#if $userStore && $userStore.isAuthenticated}
-    <!-- {#if true} -->
     <Manager />
   {:else}
     <Login />

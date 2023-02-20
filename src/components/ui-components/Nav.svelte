@@ -1,8 +1,11 @@
 <script lang="ts">
   import { logout } from "../../actions/authActions";
+  import { userStore } from "../../stores/store";
   import Sun from "svelte-material-icons/WhiteBalanceSunny.svelte";
   import Moon from "svelte-material-icons/MoonWaxingCrescent.svelte";
   import Github from "svelte-material-icons/Github.svelte";
+  import ShieldLock from "svelte-material-icons/ShieldLock.svelte";
+
   type Theme = "light" | "dark";
 
   let theme: Theme = (localStorage.getItem("theme") as Theme) || "dark";
@@ -20,7 +23,12 @@
 
 <nav class="nav-container">
   <div class="logo">
-    <h1>Basic Pass</h1>
+    <div class="heading">
+      <span class="icon"><ShieldLock size="3rem" /></span>
+      <h1>
+        {$userStore.username}
+      </h1>
+    </div>
   </div>
   <div class="nav-panel">
     <ul>
@@ -100,6 +108,14 @@
 
   .icon-link-button:visited {
     background: inherit;
+  }
+
+  .heading {
+    display: flex;
+  }
+  .icon {
+    margin-right: 16px;
+    margin-top: 6px;
   }
 
   @media (max-width: 768px) {
