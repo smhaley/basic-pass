@@ -1,7 +1,8 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { TABS } from "./Tabs.svelte";
-  import type {TabContext} from './types'
+  import type { TabContext } from "./types";
+  import { fade } from "svelte/transition";
 
   const panel = {};
   const { registerPanel, selectedPanel } = getContext<TabContext>(TABS);
@@ -10,5 +11,7 @@
 </script>
 
 {#if $selectedPanel === panel}
-  <slot />
+  <div in:fade={{ delay: 90 }}>
+    <slot />
+  </div>
 {/if}
