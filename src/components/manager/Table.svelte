@@ -181,6 +181,7 @@
     border-collapse: collapse;
     table-layout: fixed;
     box-shadow: var(--container-shadow);
+    border-bottom: 1px solid var(--green);
   }
 
   td,
