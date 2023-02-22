@@ -8,7 +8,3 @@ export type User = {
 export type UserAction = { userData: User };
 
 export const logout = globalLogout;
-
-export const generateNewUserStore = () => {};
-
-export const decryptUserStore = () => {};

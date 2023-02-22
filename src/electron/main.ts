@@ -1,7 +1,7 @@
 import {
   app,
   BrowserWindow,
- type WebFrameMain,
+  type WebFrameMain,
   ipcMain,
   type IpcMainInvokeEvent,
 } from "electron";
