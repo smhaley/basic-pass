@@ -2,8 +2,6 @@ import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { deepCopyTable } from './utils';
 
-import type { User } from '../actions/authActions';
-
 export type TableEntry = {
   username: string;
   timestamp: string;
@@ -30,7 +28,7 @@ export const createTableStore = () => {
   return {
     subscribe,
     setTableData: (table: TableData) => set(table),
-    addTableEntry: (site: string, tableData: TableEntry, user?: User) => {
+    addTableEntry: (site: string, tableData: TableEntry) => {
       let newTableData: TableData;
       update((table) => {
         const updatedTable = { ...table, [site]: tableData };

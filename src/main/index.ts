@@ -9,30 +9,26 @@ import * as path from 'path';
 const STORES = path.join(__dirname, 'stores');
 
 const validateSender = (frame: WebFrameMain): boolean => {
-  // Value the host of the URL using an actual URL parser and an allowlist
-  console.log(frame.url, __dirname);
+  //test if localhost will work when bundled
+  console.log(frame.origin);
+  // const sender = new URL(frame.url);
+  // console.log('--> ', sender, __dirname);
   return true;
-  // if (frame.url.includes(path.join(__dirname, '../'))) return true
-  // return false
 };
 
-export const createNewUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
-  // if (!validateSender(e.senderFrame)) return
+export const createNewUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
   if (!fs.existsSync(STORES)) {
     await fs.promises.mkdir(STORES, { recursive: true });
   }
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
-export const upsertUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
-  console.log(args);
+export const upsertUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
 export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => {
-  // if (!validateSender(e.senderFrame)) return
   validateSender(e.senderFrame);
-  console.log(__dirname);
   if (!fs.existsSync(STORES)) {
     await fs.promises.mkdir(STORES, { recursive: true });
   }
@@ -44,7 +40,6 @@ export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => 
 };
 
 export const getUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<string> => {
-  console.log(args);
   const storePath = path.join(STORES, `${args[0].toLowerCase()}.aes`);
 
   if (!fs.existsSync(storePath)) {
