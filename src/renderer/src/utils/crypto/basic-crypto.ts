@@ -10,12 +10,12 @@ export class BasicCrypto {
     this.username = username;
   }
 
-  encryptTable = (tableData: TableData) => {
+  encryptTable = (tableData: TableData): string => {
     const cypherText = CryptoJS.AES.encrypt(JSON.stringify(tableData), this.passphrase).toString();
     return cypherText;
   };
 
-  decryptTable = (cypherText: string) => {
+  decryptTable = (cypherText: string): TableData => {
     const bytes = CryptoJS.AES.decrypt(cypherText, this.passphrase);
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     return decryptedData;

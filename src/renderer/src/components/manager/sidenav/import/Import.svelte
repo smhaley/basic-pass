@@ -34,7 +34,7 @@
     filename = undefined;
   };
 
-  const handleCancel = (e: Event) => {
+  const handleCancel = () => {
     resetImportState();
   };
 </script>

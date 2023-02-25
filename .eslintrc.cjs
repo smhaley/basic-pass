@@ -43,4 +43,4 @@ module.exports = {
   settings: {
     'svelte3/typescript': true
   }
-}
+};

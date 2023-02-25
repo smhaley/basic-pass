@@ -1,11 +1,11 @@
-import type { TableEntry } from "../stores/tableStore";
+import type { TableEntry } from '../stores/tableStore';
 
 export interface SiteData extends TableEntry {
   site: string;
 }
 
-export const TABLE_ENTRY = "tableEntry";
-export const DELETE_KEY = "deleteKey";
+export const TABLE_ENTRY = 'tableEntry';
+export const DELETE_KEY = 'deleteKey';
 
 export type DeleteTableEntry = { siteKey: string };
 

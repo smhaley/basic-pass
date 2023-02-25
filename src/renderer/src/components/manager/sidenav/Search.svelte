@@ -21,14 +21,14 @@
 
 <form on:submit={handleSubmit}>
   <label for="search">Site Search</label>
-  <input disabled={isDisabled} class={`text-input`} id="search" bind:value={searchInput} />
+  <input disabled={isDisabled} class="text-input" id="search" bind:value={searchInput} />
   <div class="button-group">
     <div class="button-child">
-      <button disabled={isDisabled} class="primary-button search-button" type="submit"
-        >Search</button
-      >
       <button disabled={isDisabled} class="secondary-button search-button" on:click={handleClear}
         >Clear</button
+      >
+      <button disabled={isDisabled} class="primary-button search-button" type="submit"
+        >Search</button
       >
     </div>
   </div>

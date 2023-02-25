@@ -1,4 +1,4 @@
-import { tableStore, userStore, logout as globalLogout } from "../stores/store";
+import { logout as globalLogout } from '../stores/store';
 
 export type User = {
   username: string;

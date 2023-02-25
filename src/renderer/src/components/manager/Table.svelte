@@ -91,7 +91,7 @@
 </script>
 
 <div class="table-container">
-  {#if $tableResults && $tableSize > 0}
+  {#if tableResultsSize > 0 && $tableSize > 0}
     <div class="table-content">
       <div class="table-item">
         <table>

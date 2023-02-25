@@ -1,25 +1,21 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import InputSection from "../../lib/InputSection.svelte";
-  import * as ErrorUtils from "../error-utils";
+  import { createEventDispatcher } from 'svelte';
+  import InputSection from '../../lib/InputSection.svelte';
+  import * as ErrorUtils from '../error-utils';
 
-  import {
-    TABLE_ENTRY,
-    type SiteDataAction,
-    type SiteData,
-  } from "../../actions/tableDataActions";
+  import { TABLE_ENTRY, type SiteDataAction, type SiteData } from '../../actions/tableDataActions';
 
   export let currentSiteData: SiteData = undefined;
   export let siteExistsError: boolean;
   export let newPassphrase: boolean = true;
 
-  let site = (currentSiteData && currentSiteData.site) || "";
+  let site = (currentSiteData && currentSiteData.site) || '';
   let passphrase: string;
   let validatePassphrase: string;
 
-  let username: string = (currentSiteData && currentSiteData.username) || "";
+  let username: string = (currentSiteData && currentSiteData.username) || '';
   let isNewSite = !(currentSiteData && currentSiteData.site.length);
-  let tag: string = (currentSiteData && currentSiteData.tag) || "";
+  let tag: string = (currentSiteData && currentSiteData.tag) || '';
 
   let siteError = ErrorUtils.baseError;
   let passphraseError = ErrorUtils.baseError;
@@ -39,11 +35,9 @@
     );
 
     const passErrs =
-      newPassphrase || showPassInput
-        ? [passphraseError, validatePassphraseError]
-        : [];
+      newPassphrase || showPassInput ? [passphraseError, validatePassphraseError] : [];
 
-    return ErrorUtils.doesErrorExist([siteError, ...passErrs]);
+    return ErrorUtils.doesErrorExist([siteError, usernameError, ...passErrs]);
   };
 
   const dispatch = createEventDispatcher<SiteDataAction>();
@@ -51,28 +45,25 @@
   const handleSiteData = (e: Event) => {
     e.preventDefault();
     if (validateSiteDataSubmit()) {
-      const pass =
-        newPassphrase || showPassInput
-          ? passphrase
-          : currentSiteData.passphrase;
+      const pass = newPassphrase || showPassInput ? passphrase : currentSiteData.passphrase;
       dispatch(TABLE_ENTRY, {
         site,
         username,
         passphrase: pass,
         tag,
-        timestamp: Date.now().toString(),
+        timestamp: Date.now().toString()
       });
     }
   };
 
-  const buttonText = isNewSite ? "add to store" : "update store";
+  const buttonText = isNewSite ? 'add to store' : 'update store';
 </script>
 
 <div>
   <form on:submit={handleSiteData}>
     {#if isNewSite}
       <InputSection
-        label={"Site"}
+        label={'Site'}
         errs={{ ...siteError, invalid: siteExistsError }}
         errMsgs={ErrorUtils.validateSiteErrMsgs}
         bind:value={site}
@@ -92,27 +83,22 @@
     {/if}
 
     <InputSection
-      label={"Username"}
+      label={'Username'}
       errs={usernameError}
       errMsgs={ErrorUtils.usernameErrMsgs}
       bind:value={username}
     />
-    <InputSection
-      label={"Tag"}
-      errs={undefined}
-      errMsgs={undefined}
-      bind:value={tag}
-    />
+    <InputSection label={'Tag'} errs={undefined} errMsgs={undefined} bind:value={tag} />
     {#if newPassphrase || showPassInput}
       <InputSection
-        label={"New Passphrase"}
+        label={'New Passphrase'}
         errs={passphraseError}
         type="password"
         errMsgs={ErrorUtils.passPhraseErrMsgs}
         bind:value={passphrase}
       />
       <InputSection
-        label={"Validate Passphrase"}
+        label={'Validate Passphrase'}
         errs={validatePassphraseError}
         type="password"
         errMsgs={ErrorUtils.validatePassErrMsgs}
@@ -126,7 +112,7 @@
 </div>
 
 <style>
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     width: 20px;
     height: 20px;
     margin: 12px;

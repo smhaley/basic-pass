@@ -1,25 +1,21 @@
 <script lang="ts">
-  import { afterUpdate } from "svelte";
-  import { fade } from "svelte/transition";
-  import Filter from "svelte-material-icons/Filter.svelte";
-  import Search from "svelte-material-icons/Magnify.svelte";
-  import Close from "svelte-material-icons/Close.svelte";
-  import Account from "svelte-material-icons/Account.svelte";
-  import ShipWheel from "svelte-material-icons/ShipWheel.svelte";
-  import DatabaseImport from "svelte-material-icons/DatabaseImport.svelte";
-  import Lock from "svelte-material-icons/Lock.svelte";
-  import TagFilter from "./Filter.svelte";
-  import SiteSearch from "./Search.svelte";
-  import NewSiteEntry from "./NewSiteEntry.svelte";
-  import UpdatePass from "./UpdatePass.svelte";
-  import { clickOutside } from "../../../utils/clickOutside";
-  import Export from "./Export.svelte";
-  import Import from "./import/Import.svelte";
-  import {
-    appliedFilters,
-    currentSearch,
-    sideNavOpen,
-  } from "../../../stores/store";
+  import { afterUpdate } from 'svelte';
+  import { fade } from 'svelte/transition';
+  import Filter from 'svelte-material-icons/Filter.svelte';
+  import Search from 'svelte-material-icons/Magnify.svelte';
+  import Close from 'svelte-material-icons/Close.svelte';
+  import Account from 'svelte-material-icons/Account.svelte';
+  import ShipWheel from 'svelte-material-icons/ShipWheel.svelte';
+  import DatabaseImport from 'svelte-material-icons/DatabaseImport.svelte';
+  import Lock from 'svelte-material-icons/Lock.svelte';
+  import TagFilter from './Filter.svelte';
+  import SiteSearch from './Search.svelte';
+  import NewSiteEntry from './NewSiteEntry.svelte';
+  import UpdatePass from './UpdatePass.svelte';
+  import { clickOutside } from '../../../utils/clickOutside';
+  import Export from './Export.svelte';
+  import Import from './import/Import.svelte';
+  import { appliedFilters, currentSearch, sideNavOpen } from '../../../stores/store';
 
   let isOpen = false;
 
@@ -29,28 +25,28 @@
   let activeToolTip: { position: number; label: string };
 
   const navButtons = [
-    { id: "search", label: "Search", component: Search },
-    { id: "filter", label: "Filters", component: Filter },
+    { id: 'search', label: 'Search', component: Search },
+    { id: 'filter', label: 'Filters', component: Filter },
     {
-      id: "newEntry",
-      label: "New Entry",
-      component: Lock,
+      id: 'newEntry',
+      label: 'New Entry',
+      component: Lock
     },
     {
-      id: "account",
-      label: "account settings",
-      component: Account,
+      id: 'account',
+      label: 'account settings',
+      component: Account
     },
     {
-      id: "export",
-      label: "Export Table Data",
-      component: ShipWheel,
+      id: 'export',
+      label: 'Export Table Data',
+      component: ShipWheel
     },
     {
-      id: "import",
-      label: "Import Table Data",
-      component: DatabaseImport,
-    },
+      id: 'import',
+      label: 'Import Table Data',
+      component: DatabaseImport
+    }
   ];
 
   const handleToolTip = (position: number, label: string) => {
@@ -63,7 +59,7 @@
     newEntry: NewSiteEntry,
     account: UpdatePass,
     export: Export,
-    import: Import,
+    import: Import
   };
 
   const handleIconClick = (icon: string) => {
@@ -73,17 +69,16 @@
     activeToolTip = undefined;
   };
 
-  const handleEsc = (e: KeyboardEvent) => e.key === "Escape" && handleClose();
+  const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleClose();
 
   const handleClose = () => {
-    console.log("clouse")
     isOpen = false;
     sideNavOpen.set(false);
   };
 
   const hasActiveFilter = (id: string) =>
-    (id === "search" && $currentSearch && $currentSearch.length) ||
-    (id === "filter" && $appliedFilters && $appliedFilters.length);
+    (id === 'search' && $currentSearch && $currentSearch.length) ||
+    (id === 'filter' && $appliedFilters && $appliedFilters.length);
 
   afterUpdate(() => {
     if (isOpen) {
@@ -97,7 +92,7 @@
 
 <div
   on:keydown={handleEsc}
-  style={!$sideNavOpen && "width: 70px"}
+  style={!$sideNavOpen && 'width: 70px'}
   class="sidenav"
   use:clickOutside
   on:outclick={handleClose}
@@ -111,7 +106,7 @@
           on:click={handleClose}
           in:fade={{ delay: 90 }}
         >
-          <Close size={"1.25em"} />
+          <Close size={'1.25em'} />
         </button>
       </div>
     {/if}
@@ -121,10 +116,7 @@
         <div class="icon-item" in:fade={{ delay: 90 }}>
           <button
             on:mouseenter={() =>
-              handleToolTip(
-                buttonRefs[navButton.id].getBoundingClientRect().top,
-                navButton.label
-              )}
+              handleToolTip(buttonRefs[navButton.id].getBoundingClientRect().top, navButton.label)}
             on:mouseleave={() => (activeToolTip = undefined)}
             bind:this={buttonRefs[navButton.id]}
             aria-label={`Open ${navButton.label}`}
@@ -132,7 +124,7 @@
             class:engaged-icon={hasActiveFilter(navButton.id)}
             on:click={() => handleIconClick(navButton.id)}
           >
-            <svelte:component this={navButton.component} size={"2em"} />
+            <svelte:component this={navButton.component} size={'2em'} />
           </button>
         </div>
       {/each}
@@ -141,10 +133,7 @@
 
   {#if $sideNavOpen}
     <div in:fade={{ delay: 90 }}>
-      <svelte:component
-        this={sideNavigation[activeNavigation]}
-        on:close={handleClose}
-      />
+      <svelte:component this={sideNavigation[activeNavigation]} on:close={handleClose} />
     </div>
   {/if}
 </div>
