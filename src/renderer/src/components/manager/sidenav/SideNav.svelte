@@ -16,13 +16,14 @@
   import Export from './Export.svelte';
   import Import from './import/Import.svelte';
   import { appliedFilters, currentSearch, sideNavOpen } from '../../../stores/store';
-
+  import { trapFocus } from '../../../utils/trapFocus';
   let isOpen = false;
 
   let closeButtonRef: HTMLButtonElement;
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
   let activeNavigation: string;
   let activeToolTip: { position: number; label: string };
+  let sideNavRef: HTMLDivElement;
 
   const navButtons = [
     { id: 'search', label: 'Search', component: Search },
@@ -69,7 +70,10 @@
     activeToolTip = undefined;
   };
 
-  const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleClose();
+  const sideNaveKeyActions = (e: KeyboardEvent) => {
+    e.key === 'Escape' && handleClose();
+    isOpen && trapFocus(e, sideNavRef);
+  };
 
   const handleClose = () => {
     isOpen = false;
@@ -91,11 +95,12 @@
 </script>
 
 <div
-  on:keydown={handleEsc}
+  on:keydown={sideNaveKeyActions}
   style={!$sideNavOpen && 'width: 70px'}
   class="sidenav"
   use:clickOutside
-  on:outclick={handleClose}
+  on:outClick={handleClose}
+  bind:this={sideNavRef}
 >
   <div class="icon-container">
     {#if $sideNavOpen}

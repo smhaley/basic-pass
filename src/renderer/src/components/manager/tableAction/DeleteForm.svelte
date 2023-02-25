@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import {
-    DELETE_KEY,
-    type DeleteAction,
-  } from "../../../actions/tableDataActions";
+  import { createEventDispatcher } from 'svelte';
+  import { DELETE_KEY, type DeleteAction } from '../../../actions/tableDataActions';
 
   export let key: string;
 
@@ -11,7 +8,7 @@
 
   const handleDelete = () => {
     dispatch(DELETE_KEY, {
-      siteKey: key,
+      siteKey: key
     });
   };
 </script>
@@ -22,10 +19,8 @@
     <h2>{key}</h2>
   </div>
 
-  <div class="button-group">
-    <button class="primary-button" on:click={handleDelete}
-      >Delete Site Entry</button
-    >
+  <div class="button-group spacer">
+    <button class="primary-button" on:click={handleDelete}>Delete Site Entry</button>
   </div>
 </div>
 
@@ -35,9 +30,13 @@
   }
   button {
     margin-left: auto;
+    margin-top: auto;
   }
 
   .head-container {
     padding-left: 12px;
+  }
+  .spacer {
+    height: 250px;
   }
 </style>

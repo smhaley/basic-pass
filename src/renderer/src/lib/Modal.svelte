@@ -84,15 +84,17 @@
   }
 
   aside .box {
+    width: 600px;
+    max-width: 100%;
+    height: 500px;
+    max-height: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: var(--bg-color);
     border-radius: 4px;
     position: relative;
     box-sizing: 0 0 20px 0px rgba(0, 0, 0, 0.3);
-    overflow-y: hidden;
-    max-height: 550px;
+    overflow-y: scroll;
     overflow-wrap: break-word;
-    /* margin: auto; */
   }
   header {
     margin-top: 6px;

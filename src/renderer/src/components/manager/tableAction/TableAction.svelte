@@ -7,37 +7,17 @@
   export let currentSiteData: SiteData;
 </script>
 
-<div>
-  <Tabs>
-    <TabList>
-      <Tab>Update</Tab>
-      <Tab>Delete</Tab>
-    </TabList>
+<Tabs>
+  <TabList>
+    <Tab>Update</Tab>
+    <Tab>Delete</Tab>
+  </TabList>
 
-    <TabPanel>
-      <div class="site-form">
-        <SiteForm on:tableEntry {currentSiteData} siteExistsError={false} newPassphrase={false} />
-      </div>
-    </TabPanel>
+  <TabPanel>
+    <SiteForm on:tableEntry {currentSiteData} siteExistsError={false} newPassphrase={false} />
+  </TabPanel>
 
-    <TabPanel>
-      <DeleteForm on:deleteKey key={currentSiteData.site} />
-    </TabPanel>
-  </Tabs>
-</div>
-
-<style>
-  div {
-    /* min-height: 450px;
-    min-height: 450px; */
-    overflow: auto;
-    min-width: 500px;
-  }
-
-  .site-form {
-    overflow-y: scroll;
-    padding: 0 20px;
-    max-height: 450px;
-    height: 100%;
-  }
-</style>
+  <TabPanel>
+    <DeleteForm on:deleteKey key={currentSiteData.site} />
+  </TabPanel>
+</Tabs>
