@@ -1,55 +1,55 @@
 <script lang="ts">
-  import { userStore, logout } from '../../../../stores/store'
-  import { BasicCrypto } from '../../../../utils/crypto/basic-crypto'
-  import * as ErrorUtils from '../../../error-utils'
-  import InputSection from '../../../../lib/InputSection.svelte'
-  import type { TableData, TableEntry } from '../../../../stores/tableStore'
-  import { deepCopyTable } from '../../../../stores/utils'
-  import { createEventDispatcher } from 'svelte'
-  import { fade } from 'svelte/transition'
+  import { userStore, logout } from '../../../../stores/store';
+  import { BasicCrypto } from '../../../../utils/crypto/basic-crypto';
+  import * as ErrorUtils from '../../../error-utils';
+  import InputSection from '../../../../lib/InputSection.svelte';
+  import type { TableData, TableEntry } from '../../../../stores/tableStore';
+  import { deepCopyTable } from '../../../../stores/utils';
+  import { createEventDispatcher } from 'svelte';
+  import { fade } from 'svelte/transition';
 
-  export let cypherText: string
-  export let filename: string
+  export let cypherText: string;
+  export let filename: string;
 
-  let storePass: string
-  let decryptedTableData: TableData
-  let previewData: string
+  let storePass: string;
+  let decryptedTableData: TableData;
+  let previewData: string;
 
-  let passphraseError: ErrorUtils.ErrObj = ErrorUtils.baseError
+  let passphraseError: ErrorUtils.ErrObj = ErrorUtils.baseError;
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
   const handleStoreDecrypt = (e: Event) => {
-    e.preventDefault()
-    passphraseError = ErrorUtils.baseError
-    const validTextErr = ErrorUtils.validateText(storePass)
+    e.preventDefault();
+    passphraseError = ErrorUtils.baseError;
+    const validTextErr = ErrorUtils.validateText(storePass);
     if (!validTextErr.missing) {
-      const basicCrypto = new BasicCrypto(storePass, $userStore.username)
+      const basicCrypto = new BasicCrypto(storePass, $userStore.username);
       try {
-        const tableData = basicCrypto.decryptTable(cypherText)
-        decryptedTableData = tableData
-        const tableCopy = deepCopyTable(tableData)
-        Object.values(tableCopy).forEach((entry: TableEntry) => delete entry.passphrase)
-        previewData = JSON.stringify(tableCopy, null, 2)
+        const tableData = basicCrypto.decryptTable(cypherText);
+        decryptedTableData = tableData;
+        const tableCopy = deepCopyTable(tableData);
+        Object.values(tableCopy).forEach((entry: TableEntry) => delete entry.passphrase);
+        previewData = JSON.stringify(tableCopy, null, 2);
       } catch (e) {
-        passphraseError = { ...ErrorUtils.baseError, invalid: true }
+        passphraseError = { ...ErrorUtils.baseError, invalid: true };
       }
     } else {
-      passphraseError = validTextErr
+      passphraseError = validTextErr;
     }
-  }
+  };
 
   const handleImportAbort = () => {
-    storePass = undefined
-    decryptedTableData = undefined
-    passphraseError = ErrorUtils.baseError
-    dispatch('cancel')
-  }
+    storePass = undefined;
+    decryptedTableData = undefined;
+    passphraseError = ErrorUtils.baseError;
+    dispatch('cancel');
+  };
 
   const handleNewDataStore = async () => {
-    await BasicCrypto.handleSrcTableUpdate(decryptedTableData, storePass, $userStore.username)
-    logout()
-  }
+    await BasicCrypto.handleSrcTableUpdate(decryptedTableData, storePass, $userStore.username);
+    logout();
+  };
 </script>
 
 {#if !decryptedTableData}
@@ -105,8 +105,10 @@
     font-size: 1.25rem;
   }
   .preview {
-    max-height: 600px;
+    max-height: 300px;
     overflow-y: scroll;
+    margin: 10px;
+    box-shadow: var(--container-shadow);
   }
   .overwrite {
     max-width: 400px;

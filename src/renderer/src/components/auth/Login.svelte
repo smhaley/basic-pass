@@ -43,35 +43,48 @@
   });
 </script>
 
-<div class="container">
-  {#if loginView}
-    <div in:fade class="login-container">
-      <UserLoginSection on:loginState={loginStateHandler} isNewUser={false}>
-        <LoginForm on:userData={handleUserLogin} {existingUsers} {incorrectPassphrase} />
-      </UserLoginSection>
-    </div>
-  {:else}
-    <div in:fade class="login-container">
-      <UserLoginSection on:loginState={loginStateHandler} isNewUser>
-        <UserForm on:userData={handleNewUser} {existingUsers} />
-      </UserLoginSection>
-    </div>
-  {/if}
+<div class="login">
+  <div class="container">
+    {#if loginView}
+      <div in:fade class="login-container">
+        <UserLoginSection on:loginState={loginStateHandler} isNewUser={false}>
+          <LoginForm on:userData={handleUserLogin} {existingUsers} {incorrectPassphrase} />
+        </UserLoginSection>
+      </div>
+    {:else}
+      <div in:fade class="login-container">
+        <UserLoginSection on:loginState={loginStateHandler} isNewUser>
+          <UserForm on:userData={handleNewUser} {existingUsers} />
+        </UserLoginSection>
+      </div>
+    {/if}
+  </div>
 </div>
 
 <style>
+  .login {
+    margin: 0 auto;
+    height: 95vh;
+    overflow: hidden;
+  }
+
   .container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
   .login-container {
     background: var(--bg-secondary);
     padding: 20px;
+    margin: 4px;
     border-radius: 3px;
     width: 80%;
-    max-width: 700px;
+    width: 500px;
     box-shadow: var(--container-shadow);
+    max-height: 100%;
+    overflow: scroll;
   }
 </style>

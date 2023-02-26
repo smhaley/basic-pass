@@ -1,34 +1,24 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { userStore } from "./stores/store";
-  import Manager from "./components/manager/Manger.svelte";
-  import Login from "./components/auth/Login.svelte";
+  import { onMount } from 'svelte';
+  import { userStore } from './stores/store';
+  import Manager from './components/manager/Manger.svelte';
+  import Login from './components/auth/Login.svelte';
 
   onMount(() => {
-    const preferredTheme = localStorage.getItem("theme");
+    const preferredTheme = localStorage.getItem('theme');
     if (preferredTheme) {
-      document.documentElement.setAttribute("data-theme", preferredTheme);
+      document.documentElement.setAttribute('data-theme', preferredTheme);
+    } else {
+      const osPreference = window.matchMedia('(prefers-color-scheme:dark)').matches
+        ? 'dark'
+        : 'light';
+      document.documentElement.setAttribute('data-theme', osPreference);
     }
   });
 </script>
 
-<div>
-  {#if $userStore && $userStore.isAuthenticated}
-    <Manager />
-  {:else}
-    <Login />
-  {/if}
-</div>
-
-<style>
-  div {
-    padding-top: 60px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 640px) {
-    div {
-      max-width: none;
-    }
-  }
-</style>
+{#if $userStore && $userStore.isAuthenticated}
+  <Manager />
+{:else}
+  <Login />
+{/if}
