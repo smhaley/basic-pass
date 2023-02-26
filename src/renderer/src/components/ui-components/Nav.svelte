@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { logout } from "../../actions/authActions";
-  import { userStore } from "../../stores/store";
-  import Sun from "svelte-material-icons/WhiteBalanceSunny.svelte";
-  import Moon from "svelte-material-icons/MoonWaxingCrescent.svelte";
-  import Github from "svelte-material-icons/Github.svelte";
-  import ShieldLock from "svelte-material-icons/ShieldLock.svelte";
+  import { logout } from '../../actions/authActions';
+  import { userStore } from '../../stores/store';
+  import Sun from 'svelte-material-icons/WhiteBalanceSunny.svelte';
+  import Moon from 'svelte-material-icons/MoonWaxingCrescent.svelte';
+  import Github from 'svelte-material-icons/Github.svelte';
+  import ShieldLock from 'svelte-material-icons/ShieldLock.svelte';
 
-  type Theme = "light" | "dark";
+  type Theme = 'light' | 'dark';
 
-  let theme: Theme = (localStorage.getItem("theme") as Theme) || "dark";
+  let theme: Theme = (localStorage.getItem('theme') as Theme) || 'dark';
 
   const themeHandler = () => {
-    if (theme === "dark") {
-      theme = "light";
+    if (theme === 'dark') {
+      theme = 'light';
     } else {
-      theme = "dark";
+      theme = 'dark';
     }
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
   };
 </script>
 
@@ -39,19 +39,19 @@
           href="http://www.github.com/smhaley/basic-pass"
           rel="noreferrer"
         >
-          <Github size={"1.9em"} />
+          <Github size={'1.9em'} />
         </a>
       </li>
       <li>
         <button
-          aria-label={`${theme === "dark" ? "light" : "dark"} theme`}
+          aria-label={`${theme === 'dark' ? 'light' : 'dark'} theme`}
           class="icon-button"
           on:click={themeHandler}
         >
-          {#if theme === "dark"}
-            <Sun size={"1.5em"} />
+          {#if theme === 'dark'}
+            <Sun size={'1.5em'} />
           {:else}
-            <Moon size={"1.5em"} />
+            <Moon size={'1.5em'} />
           {/if}
         </button>
       </li>
@@ -89,7 +89,6 @@
 
   .nav-panel {
     padding-top: 6px;
-    padding-right: 50px;
     flex-shrink: 0;
     transition: 0.1s ease-in-out;
   }
