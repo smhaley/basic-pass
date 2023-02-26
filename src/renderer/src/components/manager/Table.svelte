@@ -22,6 +22,7 @@
   let showSnack = false;
   let isOpen = false;
   let currentSiteKey: string;
+  let copyCounter = 1;
 
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
   let emptyTableMessage: string = '';
@@ -49,6 +50,7 @@
   };
 
   const handlePassClick = (siteKey: string) => {
+    copyCounter = copyCounter + 1;
     showSnack = true;
     if ($tableStore && $tableStore[siteKey]) {
       navigator.clipboard.writeText($tableStore[siteKey].passphrase);
@@ -147,7 +149,9 @@
     <div class="empty-results">{emptyTableMessage}</div>
   {/if}
 </div>
-<Snack message="Copied to clipboard" on:snackClose={handleSnackClose} show={showSnack} />
+{#key copyCounter}
+  <Snack message="Copied to clipboard" on:snackClose={handleSnackClose} show={showSnack} />
+{/key}
 
 <Modal bind:isOpen triggerRef={buttonRefs[currentSiteKey]}>
   <TableAction
@@ -245,6 +249,7 @@
     text-align: left;
     position: relative;
   }
+
   table thead th {
     position: sticky;
     top: 0;

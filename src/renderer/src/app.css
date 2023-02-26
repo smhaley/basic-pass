@@ -26,14 +26,14 @@
   --active-green-tab: #60c689;
   --disabled: rgba(192, 166, 166, 0.4);
   --disabled-font: #333;
-  --xxxs: "380px";
-  --xxs: "440px";
-  --xs: "480px";
-  --sm: "768px";
-  --md: "992px";
-  --lg: "1200px";
+  --xxxs: '380px';
+  --xxs: '440px';
+  --xs: '480px';
+  --sm: '768px';
+  --md: '992px';
+  --lg: '1200px';
   --container-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-  --font: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --font: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 
   font-family: var(--font);
   scrollbar-width: thin;
@@ -53,7 +53,11 @@
   background: var(--light-green);
 }
 
-[data-theme="light"] {
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+[data-theme='light'] {
   --font-color: #333;
   --link-color: #0a86da;
   --link-white-color: rgb(0, 100, 200);
@@ -97,8 +101,6 @@ label {
   display: block;
 }
 
-
-
 input,
 button,
 select,
@@ -113,7 +115,8 @@ textarea {
   border-radius: 2px;
 }
 
-button, .file-upload {
+button,
+.file-upload {
   padding: 12px 15px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -156,7 +159,7 @@ button, .file-upload {
 .danger-button {
   color: #ccc;
   background-color: var(--red-dark);
-  border: 1px solid  var(--red-dark);
+  border: 1px solid var(--red-dark);
 }
 
 .danger-button:hover {
@@ -226,7 +229,7 @@ label {
   border-color: var(--pink);
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   accent-color: var(--light-blue);
 }
 

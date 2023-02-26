@@ -19,7 +19,7 @@
     <h2>{key}</h2>
   </div>
 
-  <div class="button-group spacer">
+  <div class="button-group">
     <button class="primary-button" on:click={handleDelete}>Delete Site Entry</button>
   </div>
 </div>
@@ -35,8 +35,5 @@
 
   .head-container {
     padding-left: 12px;
-  }
-  .spacer {
-    height: 250px;
   }
 </style>

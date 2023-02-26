@@ -1,29 +1,32 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import Success from "svelte-material-icons/CheckboxMarkedCirclePlusOutline.svelte";
-  import Error from "svelte-material-icons/AlertCircle.svelte";
-  
+  import { createEventDispatcher, onMount } from 'svelte';
+  import Success from 'svelte-material-icons/CheckboxMarkedCirclePlusOutline.svelte';
+  import Error from 'svelte-material-icons/AlertCircle.svelte';
+
   const dispatch = createEventDispatcher<{ snackClose: { show: boolean } }>();
 
   export let show = false;
   export let message: string;
-  export let type: "success" | "error" = "success";
-  $: if (show) handleSnack();
+  export let type: 'success' | 'error' = 'success';
 
-  const handleSnack = () => {
-    setTimeout(function () {
-      dispatch("snackClose", {
-        show: false,
+  onMount(() => {
+    const closeSnack = () => {
+      dispatch('snackClose', {
+        show: false
       });
-    }, 3000);
-  };
+    };
+    const close = setTimeout(closeSnack, 2000);
+    return () => {
+      clearTimeout(close);
+    };
+  });
 </script>
 
-<div class={`snackbar ${show && "show"} ${type === "error" && "snack-err"}`}>
-  {#if type === "success" || !type}
-    <Success size={"2rem"} />
+<div class={`snackbar ${show && 'show'} ${type === 'error' && 'snack-err'}`}>
+  {#if type === 'success' || !type}
+    <Success size={'2rem'} />
   {:else}
-    <Error size={"2rem"} />
+    <Error size={'2rem'} />
   {/if}
   {message}
 </div>
@@ -39,7 +42,7 @@
     border-radius: 2px;
     padding: 12px;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 50%;
     bottom: 30px;
     font-size: 1.3rem;
@@ -60,8 +63,8 @@
 
   .show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
   }
 
   @-webkit-keyframes fadein {
