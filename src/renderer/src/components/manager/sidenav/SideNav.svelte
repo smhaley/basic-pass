@@ -35,17 +35,17 @@
     },
     {
       id: 'account',
-      label: 'account settings',
+      label: 'store settings',
       component: Account
     },
     {
       id: 'export',
-      label: 'Export Table Data',
+      label: 'Export Store Data',
       component: ShipWheel
     },
     {
       id: 'import',
-      label: 'Import Table Data',
+      label: 'Import Store Data',
       component: DatabaseImport
     }
   ];

@@ -27,14 +27,14 @@
 
 <div class="export-container">
   <div class="heading-container">
-    <h2>Table Export</h2>
+    <h2>Store Export</h2>
   </div>
-  <p>You may export your table into an encrypted text file.</p>
-  <p>The file may be used to transfer table data between machines.</p>
+  <p>You may export your store's table into an encrypted text file.</p>
+  <p>The file may be used to transfer table data between machines or store accounts.</p>
   <p>Altering the exported file may corrupt the encrypted table.</p>
   <div class="button-group">
     <button class="primary-button" on:click={downloadTableFile}
-      >Download User Table</button
+      >Download Store Table</button
     >
   </div>
 </div>
@@ -45,7 +45,7 @@
   }
   button {
     margin-top: 16px;
-    max-width: 260px;
+    max-width: 290px;
     margin-left: auto;
   }
   .heading-container {

@@ -33,7 +33,7 @@
 
 <form on:submit={handleSubmit}>
   <InputSection
-    label={"Username"}
+    label={"Store Name"}
     errs={usernameError}
     errMsgs={ErrorUtils.loginUserErrMsgs}
     bind:value={username}

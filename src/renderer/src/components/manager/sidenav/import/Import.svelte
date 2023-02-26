@@ -41,22 +41,22 @@
 
 <div class="export-container">
   <div class="heading-container">
-    <h2>Table Import</h2>
+    <h2>Store Import</h2>
   </div>
   {#if !filename}
     <div in:fade={{ delay: 90 }}>
       <p>You may import a previously exported table store.</p>
       <strong
-        >Once a table import is finalized, the change cannot be undone.</strong
+        >Once a store import is finalized, the change cannot be undone.</strong
       >
       <p>
         All aspects of the the import, including the password, will overwrite
-        those of the current logged in table account.
+        those of the current logged in store account.
       </p>
 
       <p>
         The password used to decrypt the imported table will become the password
-        for the current logged in user.
+        for the current logged in store.
       </p>
 
       <div class="button-group">

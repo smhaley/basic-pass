@@ -16,7 +16,7 @@
   };
 </script>
 
-<h2 class="heading-container">Update User Passphrase</h2>
+<h2 class="heading-container">Update Store Passphrase</h2>
 <div>
   <UserForm on:userData={handleUpdate} currentUsername={$userStore.username} />
 </div>

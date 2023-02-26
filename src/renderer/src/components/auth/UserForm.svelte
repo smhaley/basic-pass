@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import InputSection from "../../lib/InputSection.svelte";
-  import * as ErrorUtils from "../error-utils";
-  import type { UserAction } from "../../actions/authActions";
+  import { createEventDispatcher } from 'svelte';
+  import InputSection from '../../lib/InputSection.svelte';
+  import * as ErrorUtils from '../error-utils';
+  import type { UserAction } from '../../actions/authActions';
 
   export let currentUsername: string = undefined;
   export let existingUsers: string[] = undefined;
@@ -11,7 +11,7 @@
   let passphrase: string;
   let validatePassphrase: string;
 
-  const isNewUser = typeof currentUsername === "undefined";
+  const isNewUser = typeof currentUsername === 'undefined';
 
   let usernameError: ErrorUtils.ErrObj = ErrorUtils.baseError;
   let passphraseError: ErrorUtils.ErrObj = ErrorUtils.baseError;
@@ -28,16 +28,10 @@
       validatePassphrase
     );
 
-    if (
-      ErrorUtils.doesErrorExist([
-        usernameError,
-        passphraseError,
-        validatePassphraseError,
-      ])
-    ) {
-      dispatch("userData", {
+    if (ErrorUtils.doesErrorExist([usernameError, passphraseError, validatePassphraseError])) {
+      dispatch('userData', {
         username,
-        passphrase,
+        passphrase
       });
     }
   };
@@ -46,30 +40,28 @@
 <form on:submit={handleSubmit}>
   {#if isNewUser}
     <InputSection
-      label={"Username"}
+      label={'Store Name'}
       errs={usernameError}
       errMsgs={ErrorUtils.usernameErrMsgs}
       bind:value={username}
     />
   {/if}
   <InputSection
-    label={"Passphrase"}
+    label={'Passphrase'}
     errs={passphraseError}
     type="password"
     errMsgs={ErrorUtils.passPhraseErrMsgs}
     bind:value={passphrase}
   />
   <InputSection
-    label={"Validate Passphrase"}
+    label={'Validate Passphrase'}
     errs={validatePassphraseError}
     type="password"
     errMsgs={ErrorUtils.validatePassErrMsgs}
     bind:value={validatePassphrase}
   />
   <div class="button-group">
-    <button class:small-screen={!isNewUser} class="primary-button"
-      >Submit</button
-    >
+    <button class:small-screen={!isNewUser} class="primary-button">Submit</button>
   </div>
 </form>
 

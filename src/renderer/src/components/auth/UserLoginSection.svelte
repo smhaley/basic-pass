@@ -4,9 +4,9 @@
 
   export let isNewUser: boolean;
 
-  const sectionHead = isNewUser ? "Create New User Store" : "Basic Pass Login";
+  const sectionHead = isNewUser ? "Create New Store" : "Basic Pass Login";
 
-  const linkText = isNewUser ? "Return to user login" : "Create new user store";
+  const linkText = isNewUser ? "Return to store login" : "Create new store";
 
   const dispatch = createEventDispatcher();
 
