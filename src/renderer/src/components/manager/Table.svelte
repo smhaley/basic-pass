@@ -162,41 +162,6 @@
 </Modal>
 
 <style>
-  table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    border-bottom: 1px solid var(--green);
-  }
-
-  td,
-  th {
-    box-shadow: 0 -1px 0px 0px var(--green);
-    background-color: var(--bg-primary);
-    text-align: left;
-    display: table-cell;
-    padding: 8px 12px;
-    overflow-wrap: break-word;
-  }
-  td {
-    max-width: 150px;
-    min-width: 150px;
-  }
-
-  thead {
-    display: table-header-group;
-    font-size: 1.4rem;
-    text-transform: capitalize;
-  }
-  tr {
-    font-size: 1.1rem;
-    line-height: 1.1rem;
-    color: inherit;
-    display: table-row;
-    vertical-align: middle;
-    outline: 0px;
-    min-height: 70px;
-  }
-
   .icon-data {
     text-align: center;
     vertical-align: middle;
@@ -228,7 +193,6 @@
   .table-container {
     margin-left: 80px;
     margin-top: 16px;
-    height: 100%;
   }
 
   .empty-results {
@@ -244,6 +208,42 @@
     overflow-x: scroll;
   }
 
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-bottom: 1px solid var(--green);
+  }
+
+  td,
+  th {
+    box-shadow: 0 -1px 0px 0px var(--green);
+    background-color: var(--bg-primary);
+    text-align: left;
+    display: table-cell;
+    padding: 8px 12px;
+    overflow-wrap: break-word;
+  }
+  td {
+    max-width: 150px;
+    min-width: 150px;
+  }
+
+  thead {
+    display: table-header-group;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+  }
+
+  tr {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+    color: inherit;
+    display: table-row;
+    vertical-align: middle;
+    outline: 0px;
+    min-height: 70px;
+  }
+
   table tbody th {
     font-weight: 100;
     text-align: left;
@@ -255,22 +255,30 @@
     top: 0;
     z-index: 1;
     background: var(--bg-secondary);
-    box-shadow: inset 0 -1px 0px 0px var(--green);
+    box-shadow: inset 0 -3px 0px 0px var(--green);
   }
 
   table thead th:first-child {
+    border-top-left-radius: 2px;
     position: sticky;
     left: 0;
     z-index: 4;
-    box-shadow: inset -1px 0 0px 0px var(--green), inset 0 -1px 0px 0px var(--green);
+    box-shadow: inset -3px 0 0px 0px var(--green), inset 0 -3px 0px 0px var(--green);
+  }
+
+  table thead th:last-child {
+    border-top-right-radius: 2px;
   }
 
   table tbody th {
     position: sticky;
     left: 0;
     z-index: 3;
-    box-shadow: inset -1px 0 0px 0px var(--green), inset 0 -1px 0px 0px var(--green);
+    box-shadow: inset -3px 0 0px 0px var(--green), inset 0 -1px 0px 0px var(--green);
     background: var(--bg-secondary);
+  }
+  th {
+    box-shadow: 0.25em 0.25em 0.25em rgba(0, 0, 0, 0.4);
   }
 
   table tbody th:last-child {
@@ -282,7 +290,7 @@
   }
 
   table > tbody > tr:last-child > th {
-    box-shadow: inset -1px 0 0px 0px var(--green);
+    box-shadow: inset -3px 0 0px 0px var(--green);
   }
 
   .active-sort {

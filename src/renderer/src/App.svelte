@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { userStore } from './stores/store';
-  import Manager from './components/manager/Manger.svelte';
+  import Manager from './components/manager/Manager.svelte';
   import Login from './components/auth/Login.svelte';
 
   onMount(() => {
