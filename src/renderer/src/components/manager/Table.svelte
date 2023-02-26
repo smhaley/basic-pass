@@ -184,10 +184,9 @@
   }
 
   .table-content {
-    overflow: auto;
     justify-content: center;
     display: flex;
-    height: calc(100vh - 90px);
+    max-height: calc(100vh - 100px);
   }
 
   .table-container {
@@ -206,6 +205,7 @@
 
   .table-item {
     overflow-x: scroll;
+    box-shadow: var(--container-shadow);
   }
 
   table {
