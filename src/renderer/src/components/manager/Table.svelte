@@ -205,6 +205,7 @@
 
   .table-item {
     overflow-x: scroll;
+    border-radius: 2px;
     box-shadow: var(--container-shadow);
   }
 
@@ -259,15 +260,10 @@
   }
 
   table thead th:first-child {
-    border-top-left-radius: 2px;
     position: sticky;
     left: 0;
     z-index: 4;
     box-shadow: inset -3px 0 0px 0px var(--green), inset 0 -3px 0px 0px var(--green);
-  }
-
-  table thead th:last-child {
-    border-top-right-radius: 2px;
   }
 
   table tbody th {

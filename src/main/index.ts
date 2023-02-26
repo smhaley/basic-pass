@@ -8,27 +8,32 @@ import * as path from 'path';
 
 const STORES = path.join(__dirname, 'stores');
 
-const validateSender = (frame: WebFrameMain): boolean => {
-  //test if localhost will work when bundled
-  console.log(frame.origin);
-  // const sender = new URL(frame.url);
-  // console.log('--> ', sender, __dirname);
-  return true;
-};
+const validateSender = (frame: WebFrameMain): boolean => frame.origin.includes('localhost');
 
-export const createNewUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
+export const createNewUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
+  if (!validateSender(e.senderFrame)) {
+    throw new Error('invalid sender');
+  }
+
   if (!fs.existsSync(STORES)) {
     await fs.promises.mkdir(STORES, { recursive: true });
   }
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
-export const upsertUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
+export const upsertUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
+  if (!validateSender(e.senderFrame)) {
+    throw new Error('invalid sender');
+  }
+
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
 export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => {
-  validateSender(e.senderFrame);
+  if (!validateSender(e.senderFrame)) {
+    throw new Error('invalid sender');
+  }
+
   if (!fs.existsSync(STORES)) {
     await fs.promises.mkdir(STORES, { recursive: true });
   }
@@ -39,7 +44,10 @@ export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => 
   return stores;
 };
 
-export const getUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<string> => {
+export const getUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<string> => {
+  if (!validateSender(e.senderFrame)) {
+    throw new Error('invalid sender');
+  }
   const storePath = path.join(STORES, `${args[0].toLowerCase()}.aes`);
 
   if (!fs.existsSync(storePath)) {

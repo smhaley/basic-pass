@@ -19,6 +19,7 @@ export const tableResults = derived(
   [tableStore, appliedFilters, currentSearch, tableSort],
 
   ([$tableStore, $appliedFilters, $currentSearch, $tableSort]) => {
+    if (!tableStore) return {};
     return sortBySite(
       filterBySearch(filterTableByTag($tableStore, $appliedFilters), $currentSearch),
       $tableSort
