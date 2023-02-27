@@ -2,6 +2,7 @@
   import { afterUpdate } from 'svelte';
   import Snack from '../../lib/Snack.svelte';
   import More from 'svelte-material-icons/DotsHorizontal.svelte';
+  import TablePaginate from './TablePaginate.svelte';
   import ContentCopy from 'svelte-material-icons/ContentCopy.svelte';
   import Modal from '../../lib/Modal.svelte';
   import Up from 'svelte-material-icons/MenuUp.svelte';
@@ -16,6 +17,7 @@
     tableSort
   } from '../../stores/store';
   import TableAction from './tableAction/TableAction.svelte';
+  import TableTools from './TableTools.svelte';
 
   import type { SiteData, DeleteTableEntry } from '../../actions/tableDataActions';
 
@@ -95,6 +97,7 @@
 <div class="table-container">
   {#if tableResultsSize > 0 && $tableSize > 0}
     <div class="table-content">
+      <TableTools />
       <div class="table-item">
         <table>
           <thead>
@@ -144,6 +147,7 @@
           </tbody>
         </table>
       </div>
+      <TablePaginate />
     </div>
   {:else}
     <div class="empty-results">{emptyTableMessage}</div>
@@ -185,8 +189,10 @@
 
   .table-content {
     justify-content: center;
+    flex-direction: column;
     display: flex;
     max-height: calc(100vh - 100px);
+    box-shadow: var(--container-shadow);
   }
 
   .table-container {
@@ -206,7 +212,7 @@
   .table-item {
     overflow-x: scroll;
     border-radius: 2px;
-    box-shadow: var(--container-shadow);
+
   }
 
   table {

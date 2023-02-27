@@ -118,7 +118,7 @@
 
     {#if !$sideNavOpen}
       {#each navButtons as navButton}
-        <div class="icon-item" in:fade={{ delay: 90 }}>
+      <div class="icon-item" in:fade={{ delay: 90 }}>
           <button
             on:mouseenter={() =>
               handleToolTip(buttonRefs[navButton.id].getBoundingClientRect().top, navButton.label)}

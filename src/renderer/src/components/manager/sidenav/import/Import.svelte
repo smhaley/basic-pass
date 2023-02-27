@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ImportConfirm from "./ImportConfirm.svelte";
-  import { fade } from "svelte/transition";
+  import ImportConfirm from './ImportConfirm.svelte';
+  import { fade } from 'svelte/transition';
 
   let cypherText: string;
   let filename: string;
@@ -9,9 +9,7 @@
   const handleUpload = () => {
     mountKey = mountKey++;
     resetImportState();
-    const file = (
-      document.querySelector("input[type=file]") as HTMLInputElement
-    ).files[0];
+    const file = (document.querySelector('input[type=file]') as HTMLInputElement).files[0];
     const reader = new FileReader();
 
     if (file) {
@@ -19,11 +17,11 @@
     }
     reader.onloadend = () => {
       const inputCypher = reader.result;
-      if (typeof inputCypher === "string") {
+      if (typeof inputCypher === 'string') {
         cypherText = inputCypher;
         filename = file.name;
       } else {
-        window.alert("Please check your file and try again");
+        window.alert('Please check your file and try again');
       }
     };
   };
@@ -46,23 +44,19 @@
   {#if !filename}
     <div in:fade={{ delay: 90 }}>
       <p>You may import a previously exported table store.</p>
-      <strong
-        >Once a store import is finalized, the change cannot be undone.</strong
-      >
+      <strong>Once a store import is finalized, the change cannot be undone.</strong>
       <p>
-        All aspects of the the import, including the password, will overwrite
-        those of the current logged in store account.
+        All aspects of the the import, including the password, will overwrite those of the current
+        logged in store account.
       </p>
 
       <p>
-        The password used to decrypt the imported table will become the password
-        for the current logged in store.
+        The password used to decrypt the imported table will become the password for the current
+        logged in store.
       </p>
 
       <div class="button-group">
-        <label for="file-upload" class="file-upload primary-button">
-          Store Upload
-        </label>
+        <label for="file-upload" class="file-upload primary-button"> Upload Store </label>
         <input id="file-upload" type="file" on:change={handleUpload} />
       </div>
     </div>
@@ -83,7 +77,7 @@
     text-align: center;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: none;
   }
 

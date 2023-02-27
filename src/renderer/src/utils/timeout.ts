@@ -4,7 +4,7 @@ export class IdleTimer {
   private timeoutLimit: number;
   private interval: NodeJS.Timer;
 
-  private _eventNames: string[] = [
+  private eventNames: string[] = [
     'DOMMouseScroll',
     'mousedown',
     'mousemove',
@@ -26,7 +26,7 @@ export class IdleTimer {
   }
 
   private track = () => {
-    this._eventNames.forEach((event) => {
+    this.eventNames.forEach((event) => {
       window.addEventListener(event, this.setTimeoutLimit);
     });
   };
@@ -37,7 +37,6 @@ export class IdleTimer {
 
   private intervalCounter = () => {
     this.interval = setInterval(() => {
-      console.log('bang', this.timeoutLimit, Date.now());
       if (this.timeoutLimit < Date.now()) {
         this.onTimeout();
       }
@@ -46,7 +45,7 @@ export class IdleTimer {
 
   public cleanup = () => {
     clearInterval(this.interval);
-    this._eventNames.forEach((event) => {
+    this.eventNames.forEach((event) => {
       window.removeEventListener(event, this.setTimeoutLimit);
     });
   };
