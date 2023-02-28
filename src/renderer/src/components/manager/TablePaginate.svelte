@@ -1,28 +1,43 @@
 <script lang="ts">
   import MenuRight from 'svelte-material-icons/MenuRight.svelte';
   import MenuLeft from 'svelte-material-icons/MenuLeft.svelte';
+  import { paginate, tableResults } from '../../stores/store';
 
-  let current: number[] = [0, 9]; //[a,b)
-  let total: number = 100;
+  let tableSize: number = Object.keys($tableResults).length;
+
+  $: $tableResults, (tableSize = Object.keys($tableResults).length);
+
+  const paginateLeft = () => {
+    paginate.paginateLeft();
+  };
+
+  const paginateRight = () => {
+    paginate.paginateRight($tableResults);
+  };
 </script>
 
-<div class="container">
-  <div class="paginate">
-    <div class="showing">
-      <p>Showing {current[0] + 1} to {current[1] + 1} of {total}</p>
-    </div>
-    <div class="button-container">
-      <ul>
-        <li>
-          <button class="icon-button"><MenuLeft size="1.7rem" /></button>
-        </li>
-        <li>
-          <button class="icon-button"><MenuRight size="1.7rem" /></button>
-        </li>
-      </ul>
+{#if $paginate.tableOffset}
+  <div class="container">
+    <div class="paginate">
+      <div class="showing">
+        <p>
+          Showing {$paginate.tableOffset[0] + 1} to {$paginate.tableOffset[1]} of {tableSize}
+        </p>
+      </div>
+      <div class="button-container">
+        <ul>
+          <li>
+            <button class="icon-button" on:click={paginateLeft}><MenuLeft size="1.7rem" /></button>
+          </li>
+          <li>
+            <button class="icon-button" on:click={paginateRight}><MenuRight size="1.7rem" /></button
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+{/if}
 
 <style>
   .container {

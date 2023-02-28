@@ -52,3 +52,25 @@ export const sortBySite = (tableData: TableData, direction: 'ascending' | 'desce
   sortedTableKeys.forEach((key) => (sortedOutput[key] = table[key]));
   return sortedOutput;
 };
+
+export const paginateTableData = (
+  tableData: TableData,
+  paginate: { rowSize: number; tableOffset?: [number, number] }
+) => {
+  let offsets: [number, number];
+  if (!paginate.tableOffset) {
+    const { rowSize } = paginate;
+    const tableSize = Object.keys(tableData).length;
+    const rightMaxima = tableSize <= paginate.rowSize ? tableSize : rowSize;
+    offsets = [0, rightMaxima];
+  } else {
+    offsets = paginate.tableOffset;
+  }
+
+  const tableKeys = Object.keys(tableData);
+  const visibleSites = tableKeys.slice(offsets[0], offsets[1]);
+
+  return visibleSites.reduce((acc, curr) => {
+    return { ...acc, [curr]: tableData[curr] };
+  }, {} as TableData);
+};

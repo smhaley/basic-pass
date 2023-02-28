@@ -1,7 +1,8 @@
 import { writable, derived } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { createUserStore } from './userStore';
-import { filterTableByTag, filterBySearch, sortBySite } from './utils';
+import { filterTableByTag, filterBySearch, sortBySite, paginateTableData } from './utils';
+import { createPaginateStore } from './paginateStore';
 
 import { createTableStore, type TableEntry } from './tableStore';
 
@@ -12,6 +13,12 @@ export const sideNavOpen: Writable<boolean> = writable(false);
 
 export const tableSort: Writable<'ascending' | 'descending'> = writable('ascending');
 
+// exports const paginate: Writable<{ rowSize: number; tableOffset?: [number, number] }> = writable({
+//   rowSize: 2
+// });
+
+export const paginate = createPaginateStore();
+
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
 
@@ -20,10 +27,16 @@ export const tableResults = derived(
 
   ([$tableStore, $appliedFilters, $currentSearch, $tableSort]) => {
     if (!tableStore) return {};
-    return sortBySite(
+
+    const sorted = sortBySite(
       filterBySearch(filterTableByTag($tableStore, $appliedFilters), $currentSearch),
       $tableSort
     );
+
+    console.log(sorted);
+    Object.keys(sorted).length && paginate.resetOffsets(sorted);
+
+    return sorted;
   }
 );
 
