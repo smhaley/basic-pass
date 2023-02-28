@@ -13,12 +13,9 @@ export const sideNavOpen: Writable<boolean> = writable(false);
 
 export const tableSort: Writable<'ascending' | 'descending'> = writable('ascending');
 
-// exports const paginate: Writable<{ rowSize: number; tableOffset?: [number, number] }> = writable({
-//   rowSize: 2
-// });
+export const rowSize: Writable<number> = writable(5);
 
 export const paginate = createPaginateStore();
-
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
 
@@ -33,7 +30,6 @@ export const tableResults = derived(
       $tableSort
     );
 
-    console.log(sorted);
     Object.keys(sorted).length && paginate.resetOffsets(sorted);
 
     return sorted;

@@ -4,6 +4,12 @@ import type { Writable } from 'svelte/store';
 
 export type PaginateStore = { rowSize: number; tableOffset?: [number, number] };
 
+const resetTableOffset = (tableData: TableData, rowSize: number): [number, number] => {
+  const tableSize = Object.keys(tableData).length;
+  const rightMaxima = tableSize <= rowSize ? tableSize : rowSize;
+  return [0, rightMaxima];
+};
+
 export const createPaginateStore = () => {
   const initialState = { rowSize: 5 };
   const store: Writable<PaginateStore> = writable(initialState);
@@ -14,32 +20,25 @@ export const createPaginateStore = () => {
     resetOffsets: (tableData: TableData) => {
       update((paginate) => {
         const { rowSize } = paginate;
-        const tableSize = Object.keys(tableData).length;
-        const rightMaxima = tableSize <= rowSize ? tableSize : rowSize;
-        return { ...paginate, tableOffset: [0, rightMaxima] };
+        return { ...paginate, tableOffset: resetTableOffset(tableData, rowSize) };
       });
     },
-    _paginateLeft: () => {
+    paginateLeft: (tableData: TableData) => {
       update((paginate) => {
         const { rowSize, tableOffset } = paginate;
         const [min, max] = tableOffset;
-
         const leftMinima = Math.max(0, min - rowSize);
         let leftMaxima: number;
 
         if (max - min < rowSize) {
-          leftMaxima = max - (max - min);
+          const localmin = max - (max - min);
+          leftMaxima = localmin <= 0 ? Object.keys(tableData).length : localmin;
         } else {
           leftMaxima = Math.max(max - rowSize, rowSize);
         }
+
         return { ...paginate, tableOffset: [leftMinima, leftMaxima] };
       });
-    },
-    get paginateLeft() {
-      return this._paginateLeft;
-    },
-    set paginateLeft(value) {
-      this._paginateLeft = value;
     },
     paginateRight: (tableData: TableData) => {
       update((paginate) => {

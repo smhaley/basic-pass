@@ -8,7 +8,7 @@
   $: $tableResults, (tableSize = Object.keys($tableResults).length);
 
   const paginateLeft = () => {
-    paginate.paginateLeft();
+    paginate.paginateLeft($tableResults);
   };
 
   const paginateRight = () => {
