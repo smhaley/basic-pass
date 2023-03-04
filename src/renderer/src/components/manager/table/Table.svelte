@@ -34,9 +34,7 @@
   let visibleRows: TableData;
 
   $: tableResultsSize = $tableResults ? Object.keys($tableResults).length : 0;
-
   $: $paginate, (visibleRows = paginateTableData($tableResults, $paginate));
-  $: $paginate, console.log('fire');
 
   const dataCols = ['user', 'date', 'tag'];
   const buttonCols = ['passphrase', 'actions'];

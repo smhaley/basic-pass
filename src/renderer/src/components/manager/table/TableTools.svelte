@@ -3,11 +3,12 @@
   import { paginate, tableResults } from '../../../stores/store';
 
   let selectedRow = $paginate.rowSize;
-  let searchInput: string = $currentSearch;
+  let searchInput: string;
   const rowSizes = [5, 10, 15];
 
   $: searchInput, currentSearch.set(searchInput);
-
+  $: $currentSearch, (searchInput = $currentSearch);
+  
   const handleRowSelect = (e: Event) => {
     selectedRow = parseInt((e.target as HTMLSelectElement).value);
     paginate.updateRowSize(selectedRow, $tableResults);
@@ -15,7 +16,6 @@
 
   let isDisabled = $tableSize < 1;
 </script>
-
 <div class="container">
   <div class="paginate">
     <div class="row-size-container">

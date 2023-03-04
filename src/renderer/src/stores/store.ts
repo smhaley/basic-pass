@@ -4,7 +4,7 @@ import { createUserStore } from './userStore';
 import { filterTableByTag, filterBySearch, sortBySite, paginateTableData } from './utils';
 import { createPaginateStore } from './paginateStore';
 
-import { createTableStore, type TableEntry } from './tableStore';
+import { createTableStore, type TableData, type TableEntry } from './tableStore';
 
 export const appliedFilters: Writable<string[]> = writable([]);
 export const currentSearch: Writable<string> = writable();
@@ -12,8 +12,6 @@ export const currentSearch: Writable<string> = writable();
 export const sideNavOpen: Writable<boolean> = writable(false);
 
 export const tableSort: Writable<'ascending' | 'descending'> = writable('ascending');
-
-export const rowSize: Writable<number> = writable(5);
 
 export const paginate = createPaginateStore();
 export const userStore = createUserStore();
@@ -49,11 +47,21 @@ export const tableSize = derived(
   ($tableStore) => $tableStore && Object.keys($tableStore).length
 );
 
-export const logout = () => {
-  userStore.logout();
-  tableStore.destroyTable();
+const clearAuxStates = () => {
   currentSearch.set(undefined);
   appliedFilters.set([]);
   sideNavOpen.set(false);
   tableSort.set('ascending');
+};
+
+export const logout = () => {
+  userStore.logout();
+  tableStore.destroyTable();
+  clearAuxStates();
+};
+
+export const loadNewTable = (storePass: string, tableData: TableData) => {
+  userStore.updatePass(storePass);
+  tableStore.setTableData(tableData);
+  clearAuxStates();
 };

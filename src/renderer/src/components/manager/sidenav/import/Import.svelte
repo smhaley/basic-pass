@@ -62,7 +62,7 @@
     </div>
   {:else}
     {#key mountKey}
-      <ImportConfirm on:cancel={handleCancel} {filename} {cypherText} />
+      <ImportConfirm on:close on:cancel={handleCancel} {filename} {cypherText} />
     {/key}
   {/if}
 </div>

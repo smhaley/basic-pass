@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userStore, logout } from '../../../../stores/store';
+  import { userStore, loadNewTable } from '../../../../stores/store';
   import { BasicCrypto } from '../../../../utils/crypto/basic-crypto';
   import * as ErrorUtils from '../../../error-utils';
   import InputSection from '../../../../lib/InputSection.svelte';
@@ -7,6 +7,7 @@
   import { deepCopyTable } from '../../../../stores/utils';
   import { createEventDispatcher } from 'svelte';
   import { fade } from 'svelte/transition';
+
 
   export let cypherText: string;
   export let filename: string;
@@ -48,7 +49,8 @@
 
   const handleNewDataStore = async () => {
     await BasicCrypto.handleSrcTableUpdate(decryptedTableData, storePass, $userStore.username);
-    logout();
+    loadNewTable(storePass, decryptedTableData);
+    dispatch('close');
   };
 </script>
 

@@ -1,7 +1,6 @@
 import { writable } from 'svelte/store';
 import type { TableData } from './tableStore';
 import type { Writable } from 'svelte/store';
-import { rowSize } from './store';
 
 export type PaginateStore = { rowSize: number; tableOffset?: [number, number] };
 
