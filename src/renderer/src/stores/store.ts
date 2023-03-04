@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { createUserStore } from './userStore';
-import { filterTableByTag, filterBySearch, sortBySite, paginateTableData } from './utils';
+import { filterTableByTag, filterBySearch, sortBySite } from './utils';
 import { createPaginateStore } from './paginateStore';
 
 import { createTableStore, type TableData, type TableEntry } from './tableStore';
