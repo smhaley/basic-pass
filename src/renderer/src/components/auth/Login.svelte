@@ -66,6 +66,7 @@
     margin: 0 auto;
     height: 95vh;
     overflow: hidden;
+
   }
 
   .container {
@@ -77,6 +78,7 @@
   }
 
   .login-container {
+    max-width: 100%;
     background: var(--bg-secondary);
     padding: 20px;
     margin: 4px;

@@ -1,9 +1,9 @@
 import type { Writable } from 'svelte/store';
 
 export type TabContext = {
-  registerTab: (tab: any) => void;
-  registerPanel: (panel: any) => void;
-  selectTab: (tab: any) => void;
-  selectedTab: Writable<any>;
-  selectedPanel: Writable<any>;
+  registerTab: (tab: object) => void;
+  registerPanel: (panel: object) => void;
+  selectTab: (tab: object) => void;
+  selectedTab: Writable<object>;
+  selectedPanel: Writable<object>;
 };

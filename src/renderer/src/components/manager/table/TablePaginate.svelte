@@ -1,7 +1,7 @@
 <script lang="ts">
   import MenuRight from 'svelte-material-icons/MenuRight.svelte';
   import MenuLeft from 'svelte-material-icons/MenuLeft.svelte';
-  import { paginate, tableResults } from '../../stores/store';
+  import { paginate, tableResults } from '../../../stores/store';
 
   let tableSize: number = Object.keys($tableResults).length;
 
@@ -51,6 +51,7 @@
 
 <style>
   .container {
+    box-shadow: var(--container-shadow);
     font-size: 1.2rem;
     position: sticky;
     left: 0;

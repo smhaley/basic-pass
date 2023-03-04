@@ -13,7 +13,7 @@
   import { clickOutside } from '../../../utils/clickOutside';
   import Export from './Export.svelte';
   import Import from './import/Import.svelte';
-  import { appliedFilters, currentSearch, sideNavOpen } from '../../../stores/store';
+  import { appliedFilters, sideNavOpen } from '../../../stores/store';
   import { trapFocus } from '../../../utils/trapFocus';
   let isOpen = false;
 
@@ -77,8 +77,7 @@
   };
 
   const hasActiveFilter = (id: string) =>
-    (id === 'search' && $currentSearch && $currentSearch.length) ||
-    (id === 'filter' && $appliedFilters && $appliedFilters.length);
+    id === 'filter' && $appliedFilters && $appliedFilters.length;
 
   afterUpdate(() => {
     if (isOpen) {

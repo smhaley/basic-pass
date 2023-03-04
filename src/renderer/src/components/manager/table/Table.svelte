@@ -1,13 +1,13 @@
 <script lang="ts">
   import { afterUpdate } from 'svelte';
-  import Snack from '../../lib/Snack.svelte';
+  import Snack from '../../../lib/Snack.svelte';
   import More from 'svelte-material-icons/DotsHorizontal.svelte';
   import ContentCopy from 'svelte-material-icons/ContentCopy.svelte';
   import TablePaginate from './TablePaginate.svelte';
-  import Modal from '../../lib/Modal.svelte';
+  import Modal from '../../../lib/Modal.svelte';
   import Up from 'svelte-material-icons/MenuUp.svelte';
-  import { userStore } from '../../stores/store';
-  import { BasicCrypto } from '../../utils/crypto/basic-crypto';
+  import { userStore } from '../../../stores/store';
+  import { BasicCrypto } from '../../../utils/crypto/basic-crypto';
   import {
     tableStore,
     tableResults,
@@ -16,13 +16,13 @@
     tableSize,
     tableSort,
     paginate
-  } from '../../stores/store';
+  } from '../../../stores/store';
   import TableAction from './tableAction/TableAction.svelte';
   import TableTools from './TableTools.svelte';
-  import { paginateTableData } from '../../stores/utils';
+  import { paginateTableData } from '../../../stores/utils';
 
-  import type { SiteData, DeleteTableEntry } from '../../actions/tableDataActions';
-  import type { TableData } from '../../stores/tableStore';
+  import type { SiteData, DeleteTableEntry } from '../../../actions/tableDataActions';
+  import type { TableData } from '../../../stores/tableStore';
 
   let showSnack = false;
   let isOpen = false;
@@ -165,7 +165,7 @@
       </div>
     </div>
   {:else}
-    <div class="empty-results">{emptyTableMessage}</div>
+    <div class="empty-results-container"><div>{emptyTableMessage}</div></div>
   {/if}
 </div>
 {#key copyCounter}
@@ -307,14 +307,14 @@
   table thead th:first-child {
     position: sticky;
     left: 0;
-    z-index: 4;
+    z-index: 2;
     box-shadow: inset -3px 0 0px 0px var(--green), inset 0 -3px 0px 0px var(--green);
   }
 
   table tbody th {
     position: sticky;
     left: 0;
-    z-index: 3;
+    z-index: 1;
     box-shadow: inset -3px 0 0px 0px var(--green), inset 0 -1px 0px 0px var(--green);
     background: var(--bg-secondary);
   }

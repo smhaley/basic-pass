@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { currentSearch, tableSize } from '../../stores/store';
-  import { paginate, tableResults } from '../../stores/store';
+  import { currentSearch, tableSize } from '../../../stores/store';
+  import { paginate, tableResults } from '../../../stores/store';
 
-  let selectedRow = 5;
+  let selectedRow = $paginate.rowSize;
   let searchInput: string = $currentSearch;
   const rowSizes = [5, 10, 15];
 
@@ -18,7 +18,7 @@
 
 <div class="container">
   <div class="paginate">
-    <div class="showing">
+    <div class="row-size-container">
       <label for="row-size" class="row-label">Rows:</label>
       <select class="text-input" id="row-size" on:change={handleRowSelect} value={selectedRow}>
         {#each rowSizes as rowSize}
@@ -43,11 +43,13 @@
 
 <style>
   .container {
+    box-shadow: var(--container-shadow);
+    /* margin-bottom: 4px; */
     font-size: 1.2rem;
     position: sticky;
     left: 0;
     z-index: 3;
-    padding: 4px 8px;
+    padding: 10px 8px 0 8px;
   }
 
   .button-container {
@@ -61,12 +63,13 @@
     justify-content: space-between;
   }
 
-  .showing {
+  .row-size-container {
     flex-shrink: 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    padding-right: 10px;
   }
 
   #search-label {
