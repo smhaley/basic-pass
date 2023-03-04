@@ -44,7 +44,6 @@
 <style>
   .container {
     box-shadow: var(--container-shadow);
-    /* margin-bottom: 4px; */
     font-size: 1.2rem;
     position: sticky;
     left: 0;

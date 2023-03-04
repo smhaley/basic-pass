@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { DELETE_KEY, type DeleteAction } from '../../../actions/tableDataActions';
+  import { DELETE_KEY, type DeleteAction } from '../../../../actions/tableDataActions';
 
   export let key: string;
 

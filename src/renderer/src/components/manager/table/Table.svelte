@@ -89,7 +89,7 @@
 
   const generateEmptyTableMessage = () => {
     if (tableResultsSize < 1) {
-      if ($appliedFilters.length || $currentSearch.length) {
+      if ($appliedFilters.length || ($currentSearch && $currentSearch.length)) {
         return 'Your current search and/or filters have no results.';
       }
     }
@@ -165,7 +165,7 @@
       </div>
     </div>
   {:else}
-    <div class="empty-results-container"><div>{emptyTableMessage}</div></div>
+    <div class="no-table-data"><div>{emptyTableMessage}</div></div>
   {/if}
 </div>
 {#key copyCounter}
@@ -209,6 +209,7 @@
   }
 
   .table-container {
+    /* overflow: hidden; */
     margin-left: 80px;
     margin-top: 16px;
   }
@@ -249,6 +250,17 @@
     .empty-results-container {
       justify-content: center;
     }
+  }
+
+  .no-table-data {
+    display: flex;
+    height: 80vh;
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: center;
+    overflow-wrap: break-word;
+    padding: 20px;
+    overflow: hidden;
   }
 
   .paginate {
