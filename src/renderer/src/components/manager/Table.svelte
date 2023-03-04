@@ -157,7 +157,7 @@
             </table>
           </div>
         {:else}
-          <div class="empty-results-container" style=""><div>{emptyTableMessage}</div></div>
+          <div class="empty-results-container"><div>{emptyTableMessage}</div></div>
         {/if}
         <div class="paginate">
           <TablePaginate />
@@ -220,7 +220,6 @@
     max-height: calc(100vh - 100px);
     min-height: calc(100vh - 100px);
     overflow-x: hidden;
-    /* flex: 1; */
   }
 
   .table-item {
@@ -229,18 +228,27 @@
   }
 
   .empty-results-container {
-    /* display: flex; */
+    display: flex;
+    overflow-x: scroll;
     width: 100%;
-    height: 300px;
+    height: 100%;
     font-size: 1.4rem;
-    justify-content: center;
     align-items: center;
-    min-width: 1025px;
-    max-width: 1025px;
-    word-break: break-all;
     overflow-wrap: break-word;
     overflow-x: auto;
-    /* min-width: 1025px; */
+    padding: 20px;
+  }
+
+  @media (min-width: 800px) {
+    .empty-results-container {
+      min-width: 987px;
+    }
+  }
+
+  @media (min-width: 1150px) {
+    .empty-results-container {
+      justify-content: center;
+    }
   }
 
   .paginate {

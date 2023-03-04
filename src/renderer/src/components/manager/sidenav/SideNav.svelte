@@ -2,14 +2,12 @@
   import { afterUpdate } from 'svelte';
   import { fade } from 'svelte/transition';
   import Filter from 'svelte-material-icons/Filter.svelte';
-  import Search from 'svelte-material-icons/Magnify.svelte';
   import Close from 'svelte-material-icons/Close.svelte';
   import Account from 'svelte-material-icons/Account.svelte';
   import ShipWheel from 'svelte-material-icons/ShipWheel.svelte';
   import DatabaseImport from 'svelte-material-icons/DatabaseImport.svelte';
   import Lock from 'svelte-material-icons/Lock.svelte';
   import TagFilter from './Filter.svelte';
-  import SiteSearch from './Search.svelte';
   import NewSiteEntry from './NewSiteEntry.svelte';
   import UpdatePass from './UpdatePass.svelte';
   import { clickOutside } from '../../../utils/clickOutside';
@@ -26,7 +24,6 @@
   let sideNavRef: HTMLDivElement;
 
   const navButtons = [
-    { id: 'search', label: 'Search', component: Search },
     { id: 'filter', label: 'Filters', component: Filter },
     {
       id: 'newEntry',
@@ -55,7 +52,6 @@
   };
 
   const sideNavigation = {
-    search: SiteSearch,
     filter: TagFilter,
     newEntry: NewSiteEntry,
     account: UpdatePass,
@@ -118,7 +114,7 @@
 
     {#if !$sideNavOpen}
       {#each navButtons as navButton}
-      <div class="icon-item" in:fade={{ delay: 90 }}>
+        <div class="icon-item" in:fade={{ delay: 90 }}>
           <button
             on:mouseenter={() =>
               handleToolTip(buttonRefs[navButton.id].getBoundingClientRect().top, navButton.label)}

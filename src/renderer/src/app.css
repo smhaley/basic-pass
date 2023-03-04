@@ -210,7 +210,8 @@ label {
   font-size: 1.2rem;
 }
 
-.text-input, select {
+.text-input,
+select {
   background-color: var(--bg);
   color: var(--font);
   font-family: inherit;
@@ -258,6 +259,11 @@ input[type='checkbox'] {
 
 .icon-button:focus {
   background-color: var(--icon-hov-color-primary);
+}
+
+.icon-button:disabled {
+  background-color: transparent;
+  cursor: default;
 }
 
 .button-group {

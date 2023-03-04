@@ -5,7 +5,14 @@
 
   let tableSize: number = Object.keys($tableResults).length;
 
-  $: $tableResults, (tableSize = Object.keys($tableResults).length);
+  let isLeftDisabled: boolean;
+  let isRightDisabled: boolean;
+
+  $: {
+    tableSize = Object.keys($tableResults).length;
+    isLeftDisabled = $paginate.tableOffset[0] === 0;
+    isRightDisabled = $paginate.tableOffset[1] === tableSize;
+  }
 
   const paginateLeft = () => {
     paginate.paginateLeft($tableResults);
@@ -27,10 +34,13 @@
       <div class="button-container">
         <ul>
           <li>
-            <button class="icon-button" on:click={paginateLeft}><MenuLeft size="1.7rem" /></button>
+            <button class="icon-button" disabled={isLeftDisabled} on:click={paginateLeft}
+              ><MenuLeft size="1.7rem" /></button
+            >
           </li>
           <li>
-            <button class="icon-button" on:click={paginateRight}><MenuRight size="1.7rem" /></button
+            <button class="icon-button" disabled={isRightDisabled} on:click={paginateRight}
+              ><MenuRight size="1.7rem" /></button
             >
           </li>
         </ul>

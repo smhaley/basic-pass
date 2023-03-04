@@ -47,7 +47,7 @@
     position: sticky;
     left: 0;
     z-index: 3;
-    padding: 8px;
+    padding: 4px 8px;
   }
 
   .button-container {
