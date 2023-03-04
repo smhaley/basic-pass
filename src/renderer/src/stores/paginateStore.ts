@@ -13,7 +13,7 @@ const resetTableOffset = (tableData: TableData, rowSize: number): [number, numbe
 export const createPaginateStore = () => {
   const initialState = { rowSize: 5 };
   const store: Writable<PaginateStore> = writable(initialState);
-  const { subscribe, update } = store;
+  const { subscribe, update, set } = store;
 
   return {
     subscribe,
@@ -31,8 +31,8 @@ export const createPaginateStore = () => {
         let leftMaxima: number;
 
         if (max - min < rowSize) {
-          const localmin = max - (max - min);
-          leftMaxima = localmin <= 0 ? Object.keys(tableData).length : localmin;
+          const localMin = max - (max - min);
+          leftMaxima = localMin <= 0 ? Object.keys(tableData).length : localMin;
         } else {
           leftMaxima = Math.max(max - rowSize, rowSize);
         }
@@ -49,10 +49,7 @@ export const createPaginateStore = () => {
         return { ...paginate, tableOffset: [rightMinima, rightMaxima] };
       });
     },
-    updateRowSize: (size: number) => {
-      update((paginate) => {
-        return { ...paginate, rowSize: size };
-      });
-    }
+    updateRowSize: (size: number, tableData: TableData) =>
+      set({ rowSize: size, tableOffset: resetTableOffset(tableData, size) })
   };
 };

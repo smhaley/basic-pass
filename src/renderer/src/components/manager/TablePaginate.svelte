@@ -16,7 +16,7 @@
   };
 </script>
 
-{#if $paginate.tableOffset}
+{#if $paginate.tableOffset && tableSize > 0}
   <div class="container">
     <div class="paginate">
       <div class="showing">

@@ -57,6 +57,6 @@ export const createTableStore = () => {
       });
       return newTableData;
     },
-    destroyTable: () => set(null)
+    destroyTable: () => set({})
   };
 };

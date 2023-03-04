@@ -1,37 +1,32 @@
 <script lang="ts">
-  import Select from 'svelte-select';
-  //   import MenuRight from 'svelte-material-icons/MenuRight.svelte';
-  //   import MenuLeft from 'svelte-material-icons/MenuLeft.svelte';
-
   import { currentSearch, tableSize } from '../../stores/store';
-  //   import { createEventDispatcher } from 'svelte';
+  import { paginate, tableResults } from '../../stores/store';
 
-  const rowSizes = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' }
-  ];
-  let selectedRowSize = 10;
-  //   let current: number[] = [0, 9]; //[a,b)
-  //   let total: number = 100;
-
+  let selectedRow = 5;
   let searchInput: string = $currentSearch;
+  const rowSizes = [5, 10, 15];
+
+  $: searchInput, currentSearch.set(searchInput);
+
+  const handleRowSelect = (e: Event) => {
+    selectedRow = parseInt((e.target as HTMLSelectElement).value);
+    paginate.updateRowSize(selectedRow, $tableResults);
+  };
+
   let isDisabled = $tableSize < 1;
 </script>
 
 <div class="container">
   <div class="paginate">
     <div class="showing">
-      <label for="row-size">Rows per page:</label>
-      <Select
-        {rowSizes}
-        bind:selectedRowSize
-        listOffset={0}
-        --list-border-radius="2px"
-        --background="pink"
-        --list-z-index={'999'}
-      />
-      />
+      <label for="row-size" class="row-label">Rows:</label>
+      <select class="text-input" id="row-size" on:change={handleRowSelect} value={selectedRow}>
+        {#each rowSizes as rowSize}
+          <option value={rowSize}>
+            {rowSize}
+          </option>
+        {/each}
+      </select>
     </div>
     <div class="button-container">
       <label id="search-label" for="search">Site Search</label>
@@ -52,7 +47,7 @@
     position: sticky;
     left: 0;
     z-index: 3;
-    padding: 0 8px;
+    padding: 8px;
   }
 
   .button-container {
@@ -76,5 +71,22 @@
 
   #search-label {
     display: none;
+  }
+
+  select {
+    background-color: inherit;
+  }
+
+  option {
+    background-color: var(--bg-color);
+  }
+
+  select,
+  option {
+    color: var(--font-color);
+  }
+
+  .row-label {
+    padding-right: 8px;
   }
 </style>

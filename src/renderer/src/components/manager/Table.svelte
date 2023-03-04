@@ -22,6 +22,7 @@
   import { paginateTableData } from '../../stores/utils';
 
   import type { SiteData, DeleteTableEntry } from '../../actions/tableDataActions';
+  import type { TableData } from '../../stores/tableStore';
 
   let showSnack = false;
   let isOpen = false;
@@ -30,8 +31,12 @@
 
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
   let emptyTableMessage: string = '';
+  let visibleRows: TableData;
 
   $: tableResultsSize = $tableResults ? Object.keys($tableResults).length : 0;
+
+  $: $paginate, (visibleRows = paginateTableData($tableResults, $paginate));
+  $: $paginate, console.log('fire');
 
   const dataCols = ['user', 'date', 'tag'];
   const buttonCols = ['passphrase', 'actions'];
@@ -83,7 +88,7 @@
   };
 
   const generateEmptyTableMessage = () => {
-    if (!$tableResults) {
+    if (tableResultsSize < 1) {
       if ($appliedFilters.length || $currentSearch.length) {
         return 'Your current search and/or filters have no results.';
       }
@@ -97,59 +102,63 @@
 </script>
 
 <div class="table-container">
-  {#if tableResultsSize > 0 && $tableSize > 0}
+  {#if $tableSize > 0}
     <div class="table-content">
       <div class="pass-table">
         <TableTools />
-        <div class="table-item">
-          <table>
-            <thead>
-              <tr>
-                {#each tableCols as col}
-                  <th
-                    class="header-cell"
-                    class:site-col={col === 'site'}
-                    class:data-cols={dataCols.includes(col)}
-                    class:button-cols={buttonCols.includes(col)}
-                    >{col}
-                    {#if col === 'site' && tableResultsSize > 1}
-                      <button
-                        class="icon-button"
-                        on:click={handleSiteSort}
-                        class:active-sort={$tableSort === 'ascending'}
-                      >
-                        <Up size={'2rem'} />
-                      </button>
-                    {/if}
-                  </th>
-                {/each}
-              </tr>
-              <thead />
-            </thead>
-            <tbody>
-              {#each Object.keys(paginateTableData($tableResults, $paginate)) as rowKey}
+        {#if tableResultsSize > 0}
+          <div class="table-item">
+            <table>
+              <thead>
                 <tr>
-                  <th class="site-col">{rowKey}</th>
-                  {#each getRowDataByKey(rowKey) as rowData}
-                    <td class="data-col">{rowData}</td>
+                  {#each tableCols as col}
+                    <th
+                      class="header-cell"
+                      class:site-col={col === 'site'}
+                      class:data-cols={dataCols.includes(col)}
+                      class:button-cols={buttonCols.includes(col)}
+                      >{col}
+                      {#if col === 'site' && tableResultsSize > 1}
+                        <button
+                          class="icon-button"
+                          on:click={handleSiteSort}
+                          class:active-sort={$tableSort === 'ascending'}
+                        >
+                          <Up size={'2rem'} />
+                        </button>
+                      {/if}
+                    </th>
                   {/each}
-                  <td class="icon-data">
-                    <button on:click={() => handlePassClick(rowKey)} class="icon-button"
-                      ><ContentCopy size={'1.4em'} /></button
-                    >
-                  </td>
-                  <td class="icon-data">
-                    <button
-                      bind:this={buttonRefs[rowKey]}
-                      on:click={() => handleMoreClick(rowKey)}
-                      class="icon-button"><More size={'1.4em'} /></button
-                    >
-                  </td>
                 </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
+                <thead />
+              </thead>
+              <tbody>
+                {#each Object.keys(visibleRows) as rowKey}
+                  <tr>
+                    <th class="site-col">{rowKey}</th>
+                    {#each getRowDataByKey(rowKey) as rowData}
+                      <td class="data-col">{rowData}</td>
+                    {/each}
+                    <td class="icon-data">
+                      <button on:click={() => handlePassClick(rowKey)} class="icon-button"
+                        ><ContentCopy size={'1.4em'} /></button
+                      >
+                    </td>
+                    <td class="icon-data">
+                      <button
+                        bind:this={buttonRefs[rowKey]}
+                        on:click={() => handleMoreClick(rowKey)}
+                        class="icon-button"><More size={'1.4em'} /></button
+                      >
+                    </td>
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
+          </div>
+        {:else}
+          <div class="empty-results-container" style=""><div>{emptyTableMessage}</div></div>
+        {/if}
         <div class="paginate">
           <TablePaginate />
         </div>
@@ -219,13 +228,19 @@
     border-radius: 2px;
   }
 
-  .empty-results {
-    display: flex;
+  .empty-results-container {
+    /* display: flex; */
     width: 100%;
     height: 300px;
     font-size: 1.4rem;
     justify-content: center;
     align-items: center;
+    min-width: 1025px;
+    max-width: 1025px;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    overflow-x: auto;
+    /* min-width: 1025px; */
   }
 
   .paginate {
