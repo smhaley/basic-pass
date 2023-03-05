@@ -1,4 +1,4 @@
-# basic-pass-update
+# basic-pass
 
 An Electron application with Svelte and TypeScript
 
