@@ -4,6 +4,7 @@
   "description": "password management without the bullshit",
   "main": "./out/main/index.js",
   "author": "smhaley",
+  "license": "MIT",
   "homepage": "https://github.com/smhaley/basic-pass",
   "scripts": {
     "format": "prettier --write .",

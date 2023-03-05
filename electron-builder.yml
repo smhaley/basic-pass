@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: basic-pass-update
+appId: com.basic-pass.app
+productName: basic-pass
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ asarUnpack:
   - resources/*
 afterSign: build/notarize.js
 win:
-  executableName: basic-pass-update
+  executableName: basic-pass
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
