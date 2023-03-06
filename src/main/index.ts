@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, WebFrameMain, ipcMain, IpcMainInvokeEvent } from 'electron';
+import { app, shell, BrowserWindow, ipcMain, IpcMainInvokeEvent } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
@@ -6,36 +6,22 @@ import icon from '../../resources/icon.png?asset';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const STORES = path.join(__dirname, 'stores');
+const STORES = path.join(app.getPath('userData'), 'stores');
 
-const validateSender = (frame: WebFrameMain): boolean => frame.origin.includes('localhost');
-
-export const createNewUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
-  if (!validateSender(e.senderFrame)) {
-    throw new Error('invalid sender');
-  }
-
+export const createNewUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
   if (!fs.existsSync(STORES)) {
-    await fs.promises.mkdir(STORES, { recursive: true });
+    fs.mkdirSync(STORES);
   }
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
-export const upsertUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<void> => {
-  if (!validateSender(e.senderFrame)) {
-    throw new Error('invalid sender');
-  }
-
+export const upsertUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
   await fs.promises.writeFile(path.join(STORES, `${args[0].toLowerCase()}.aes`), args[1]);
 };
 
-export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => {
-  if (!validateSender(e.senderFrame)) {
-    throw new Error('invalid sender');
-  }
-
+export const getStoreList = async (): Promise<string[]> => {
   if (!fs.existsSync(STORES)) {
-    await fs.promises.mkdir(STORES, { recursive: true });
+    fs.mkdirSync(STORES);
   }
   const stores = await fs.promises.readdir(STORES);
   if (stores.length) {
@@ -44,10 +30,7 @@ export const getStoreList = async (e: IpcMainInvokeEvent): Promise<string[]> => 
   return stores;
 };
 
-export const getUserStore = async (e: IpcMainInvokeEvent, args: string[]): Promise<string> => {
-  if (!validateSender(e.senderFrame)) {
-    throw new Error('invalid sender');
-  }
+export const getUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<string> => {
   const storePath = path.join(STORES, `${args[0].toLowerCase()}.aes`);
 
   if (!fs.existsSync(storePath)) {
