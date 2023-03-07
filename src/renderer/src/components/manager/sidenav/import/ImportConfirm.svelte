@@ -81,11 +81,10 @@
     <p>Confirm User Store and Passphrase Override</p>
     <p>Please verify the preview data below.</p>
     <p>On confirm, your current logged in store will be overwritten with the store below.</p>
-    <p>
+    <strong>
       Additionally the access passphrase will will become the passphrase used to unlock the data
       below.
-    </p>
-    <p>On confirm you will be logged out. On login you will see your uploaded table data.</p>
+    </strong>
     <p>Table preview with scrubbed passphrases:</p>
     <div class="preview">
       <pre>{previewData}</pre>
