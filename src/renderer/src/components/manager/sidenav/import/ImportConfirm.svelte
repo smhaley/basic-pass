@@ -78,14 +78,12 @@
   </div>
 {:else}
   <div in:fade={{ delay: 90 }}>
-    <p>Confirm User Store and Passphrase Override</p>
+    <p>Confirm Store and Passphrase Override.</p>
     <p>Please verify the preview data below.</p>
-    <p>On confirm, your current logged in store will be overwritten with the store below.</p>
-    <p>
-      Additionally the access passphrase will will become the passphrase used to unlock the data
-      below.
-    </p>
-    <p>On confirm you will be logged out. On login you will see your uploaded table data.</p>
+    <strong>On confirm, your current logged in store will be overwritten with the store below.</strong>
+    <strong>
+      The passphrase used to unlock the imported store will become the passphrase used to log back in to this store.
+    </strong>
     <p>Table preview with scrubbed passphrases:</p>
     <div class="preview">
       <pre>{previewData}</pre>
