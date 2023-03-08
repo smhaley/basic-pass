@@ -1,24 +1,17 @@
 # basic-pass
 
-An Electron application with Svelte and TypeScript
+No frill pass management with zero IO from you machine. 
 
-## Recommended IDE Setup
+You are in the driver seat, pass stores are exportable and sharable if you choose. All data is AES 256 encrypted.
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
+## To use
 ```bash
-$ npm install
-```
 
-### Development
+$ npm i
 
-```bash
-$ npm run dev
 ```
+- build as below per your system.
+- Install from the created `/dist` dir
 
 ### Build
 
