@@ -142,7 +142,7 @@
 {/if}
 
 {#if activeToolTip}
-  <div class="tooltip" style={`top: ${activeToolTip.position + 8}px`}>
+  <div class="tooltip" style={`top: ${activeToolTip.position + 8}px; left: 71px;`}>
     {activeToolTip.label}
   </div>
 {/if}
@@ -198,21 +198,6 @@
     justify-content: center;
     padding: 20px;
     z-index: 9;
-  }
-
-  .tooltip {
-    position: fixed;
-    border-radius: 5px;
-    left: 71px;
-    background: var(--tooltip-bg);
-    color: var(--tooltip-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    z-index: 999;
-    text-transform: capitalize;
-    font-weight: bold;
   }
 
   .engaged-icon {

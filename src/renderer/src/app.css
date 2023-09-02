@@ -271,3 +271,17 @@ input[type='checkbox'] {
   flex-direction: column;
   width: 100%;
 }
+
+.tooltip {
+  position: fixed;
+  border-radius: 5px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  z-index: 999;
+  text-transform: capitalize;
+  font-weight: bold;
+}
