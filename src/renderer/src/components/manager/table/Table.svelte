@@ -16,13 +16,15 @@
     currentSearch,
     tableSize,
     tableSort,
-    paginate
+    paginate,
+    settingsStore
   } from '../../../stores/store';
   import TableAction from './tableAction/TableAction.svelte';
   import TableTools from './TableTools.svelte';
   import { paginateTableData } from '../../../stores/utils';
   import type { SiteData, DeleteTableEntry } from '../../../actions/tableDataActions';
   import type { TableData } from '../../../stores/tableStore';
+  import { RIGHT_CLICK_SHOW } from '../../../stores/settingsStore';
 
   let showSnack = false;
   let isOpen = false;
@@ -31,6 +33,7 @@
   let rightClickToolTip: { x: number; y: number; passphrase: string };
 
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
+  let tableRef: HTMLDivElement;
   let passRefs: { [key: string]: HTMLButtonElement } = {};
   let emptyTableMessage: string = '';
   let visibleRows: TableData;
@@ -72,11 +75,13 @@
   const handlePassRightClick = (siteKey: string) => {
     if ($tableStore && $tableStore[siteKey]) {
       const node = passRefs[siteKey];
-      const { x, y, right, bottom } = node.getBoundingClientRect();
+      const tableBound = tableRef.getBoundingClientRect();
+      const buttonBound = node.getBoundingClientRect();
       const { passphrase } = $tableStore[siteKey];
+
       rightClickToolTip = {
-        x: right - x,
-        y: y - (bottom - y),
+        x: tableBound.right - buttonBound.x + 10,
+        y: buttonBound.y + 2,
         passphrase
       };
     }
@@ -122,7 +127,7 @@
   });
 </script>
 
-<div class="table-container">
+<div bind:this={tableRef} class="table-container">
   {#if $tableSize > 0}
     <div class="table-content">
       <div class="pass-table">
@@ -165,7 +170,9 @@
                       <button
                         bind:this={passRefs[rowKey]}
                         on:click={() => handlePassClick(rowKey)}
-                        on:contextmenu={() => handlePassRightClick(rowKey)}
+                        on:contextmenu={$settingsStore[RIGHT_CLICK_SHOW]
+                          ? () => handlePassRightClick(rowKey)
+                          : undefined}
                         on:mouseleave={handleClosePassTooltip}
                         on:mouseup={handleClosePassTooltip}
                         class="icon-button"><ContentCopy size={'1.4em'} /></button

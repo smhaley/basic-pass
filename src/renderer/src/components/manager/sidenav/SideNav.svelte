@@ -5,6 +5,8 @@
   import Close from 'svelte-material-icons/Close.svelte';
   import Account from 'svelte-material-icons/Account.svelte';
   import ShipWheel from 'svelte-material-icons/ShipWheel.svelte';
+  import Cog from 'svelte-material-icons/Cog.svelte';
+  import Settings from './Settings.svelte';
   import DatabaseImport from 'svelte-material-icons/DatabaseImport.svelte';
   import Lock from 'svelte-material-icons/Lock.svelte';
   import TagFilter from './Filter.svelte';
@@ -44,6 +46,11 @@
       id: 'import',
       label: 'Import Store Data',
       component: DatabaseImport
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      component: Cog
     }
   ];
 
@@ -56,7 +63,8 @@
     newEntry: NewSiteEntry,
     account: UpdatePass,
     export: Export,
-    import: Import
+    import: Import,
+    settings: Settings
   };
 
   const handleIconClick = (icon: string) => {

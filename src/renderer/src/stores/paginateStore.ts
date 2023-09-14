@@ -2,7 +2,9 @@ import { writable } from 'svelte/store';
 import type { TableData } from './tableStore';
 import type { Writable } from 'svelte/store';
 
-export type PaginateStore = { rowSize: number; tableOffset?: [number, number] };
+const ROW_SIZE = 'rowSize';
+
+export type PaginateStore = { [ROW_SIZE]: number; tableOffset?: [number, number] };
 
 const resetTableOffset = (tableData: TableData, rowSize: number): [number, number] => {
   const tableSize = Object.keys(tableData).length;
@@ -11,7 +13,7 @@ const resetTableOffset = (tableData: TableData, rowSize: number): [number, numbe
 };
 
 export const createPaginateStore = () => {
-  const rows = parseInt(localStorage.getItem('rowSize')) || 5;
+  const rows = parseInt(localStorage.getItem(ROW_SIZE)) ?? 5;
   const initialState = { rowSize: rows };
   const store: Writable<PaginateStore> = writable(initialState);
   const { subscribe, update, set } = store;
@@ -51,7 +53,7 @@ export const createPaginateStore = () => {
       });
     },
     updateRowSize: (size: number, tableData: TableData) => {
-      localStorage.setItem('rowSize', size.toString());
+      localStorage.setItem(ROW_SIZE, size.toString());
       set({ rowSize: size, tableOffset: resetTableOffset(tableData, size) });
     }
   };

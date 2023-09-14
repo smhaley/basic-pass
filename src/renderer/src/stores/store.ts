@@ -3,19 +3,18 @@ import type { Writable } from 'svelte/store';
 import { createUserStore } from './userStore';
 import { filterTableByTag, filterBySearch, sortBySite } from './utils';
 import { createPaginateStore } from './paginateStore';
-
+import { createSettingsStore } from './settingsStore';
 import { createTableStore, type TableData, type TableEntry } from './tableStore';
 
 export const appliedFilters: Writable<string[]> = writable([]);
 export const currentSearch: Writable<string> = writable();
-
 export const sideNavOpen: Writable<boolean> = writable(false);
-
 export const tableSort: Writable<'ascending' | 'descending'> = writable('ascending');
 
 export const paginate = createPaginateStore();
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
+export const settingsStore = createSettingsStore();
 
 export const tableResults = derived(
   [tableStore, appliedFilters, currentSearch, tableSort],

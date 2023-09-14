@@ -1,19 +1,21 @@
 <script lang="ts">
-  import { appliedFilters, availableFilters } from "../../../stores/store";
-  import { createEventDispatcher } from "svelte";
+  import { appliedFilters, availableFilters } from '../../../stores/store';
+  import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
   const handleFilterSubmit = (e: Event) => {
     e.preventDefault();
     appliedFilters.set($appliedFilters);
-    dispatch("close");
+    dispatch('close');
   };
 
   const handleFilterReset = () => {
     appliedFilters.set([]);
-    dispatch("close");
+    dispatch('close');
   };
+
+  $: console.log($appliedFilters);
 </script>
 
 <h2 class="heading-container">Tag Filters</h2>
@@ -22,19 +24,13 @@
   <form class="filter-container" on:submit={handleFilterSubmit}>
     {#each $availableFilters as tag}
       <label>
-        <input
-          type="checkbox"
-          bind:group={$appliedFilters}
-          checked
-          value={tag}
-        />
+        <input type="checkbox" bind:group={$appliedFilters} checked value={tag} />
         {tag}
       </label>
     {/each}
     <div class="button-group">
-      <button
-        class="secondary-button search-button"
-        on:click={handleFilterReset}>reset filters</button
+      <button class="secondary-button search-button" on:click={handleFilterReset}
+        >reset filters</button
       >
     </div>
   </form>
@@ -60,7 +56,7 @@
     font-size: 1.25rem;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     width: 20px;
     height: 20px;
     margin-right: 10px;
