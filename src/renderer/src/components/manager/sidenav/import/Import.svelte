@@ -38,9 +38,6 @@
 </script>
 
 <div class="export-container">
-  <div class="heading-container">
-    <h2>Store Import</h2>
-  </div>
   {#if !filename}
     <div in:fade={{ delay: 90 }}>
       <p>You may import a previously exported table store.</p>
@@ -70,11 +67,6 @@
 <style>
   .export-container {
     padding: 0 16px;
-  }
-
-  .heading-container {
-    width: 100%;
-    text-align: center;
   }
 
   input[type='file'] {

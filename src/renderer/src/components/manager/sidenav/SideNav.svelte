@@ -17,6 +17,8 @@
   import Import from './import/Import.svelte';
   import { appliedFilters, sideNavOpen } from '../../../stores/store';
   import { trapFocus } from '../../../utils/trapFocus';
+  import SideNavItem from './SideNavItem.svelte';
+
   let isOpen = false;
 
   let closeButtonRef: HTMLButtonElement;
@@ -59,12 +61,12 @@
   };
 
   const sideNavigation = {
-    filter: TagFilter,
-    newEntry: NewSiteEntry,
-    account: UpdatePass,
-    export: Export,
-    import: Import,
-    settings: Settings
+    filter: { component: TagFilter, label: 'Tag Filters' },
+    newEntry: { component: NewSiteEntry, label: 'New Site Entry' },
+    account: { component: UpdatePass, label: 'Update Store Passphrase' },
+    export: { component: Export, label: 'Store Export' },
+    import: { component: Import, label: 'Store Import' },
+    settings: { component: Settings, label: 'Settings' }
   };
 
   const handleIconClick = (icon: string) => {
@@ -141,7 +143,12 @@
 
   {#if $sideNavOpen}
     <div in:fade={{ delay: 90 }}>
-      <svelte:component this={sideNavigation[activeNavigation]} on:close={handleClose} />
+      <SideNavItem name={sideNavigation[activeNavigation].label}>
+        <svelte:component
+          this={sideNavigation[activeNavigation].component}
+          on:close={handleClose}
+        />
+      </SideNavItem>
     </div>
   {/if}
 </div>

@@ -16,19 +16,11 @@
   };
 </script>
 
-<h2 class="heading-container">Update Store Passphrase</h2>
 <div>
   <UserForm on:userData={handleUpdate} currentUsername={$userStore.username} />
 </div>
 
 <style>
-  h2 {
-    margin: 0;
-  }
-  .heading-container {
-    width: 100%;
-    text-align: center;
-  }
   div {
     padding: 16px;
   }

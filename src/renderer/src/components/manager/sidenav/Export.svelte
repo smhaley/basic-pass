@@ -26,9 +26,6 @@
 </script>
 
 <div class="export-container">
-  <div class="heading-container">
-    <h2>Store Export</h2>
-  </div>
   <p>You may export your store's table into an encrypted text file.</p>
   <p>The file may be used to transfer table data between machines or store accounts.</p>
   <p>Altering the exported file may corrupt the encrypted table.</p>
@@ -47,9 +44,5 @@
     margin-top: 16px;
     max-width: 290px;
     margin-left: auto;
-  }
-  .heading-container {
-    width: 100%;
-    text-align: center;
   }
 </style>

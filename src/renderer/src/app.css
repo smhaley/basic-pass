@@ -58,15 +58,15 @@
 }
 
 [data-theme='light'] {
-  --font-color: #333;
+  --font-color: #575656;
   --link-color: #0a86da;
   --link-white-color: rgb(0, 100, 200);
   --bg-color: #f8f8f8;
   --bg-secondary: #f3f0f0;
   --icon-hov-color-primary: rgba(0, 0, 0, 0.04);
   --active-green-tab: #087132;
-  --tooltip-bg: #333;
-  --tooltip-color: #c1bfbd;
+  --tooltip-bg: #575656;
+  --tooltip-color: #edebe8;
 }
 
 html,

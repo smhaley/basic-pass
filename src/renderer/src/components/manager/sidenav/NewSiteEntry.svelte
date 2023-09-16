@@ -26,19 +26,11 @@
   };
 </script>
 
-<h2 class="heading-container">New Site Entry</h2>
 <div>
   <SiteForm on:tableEntry={handleNewEntry} {siteExistsError} />
 </div>
 
 <style>
-  h2 {
-    margin: 0;
-  }
-  .heading-container {
-    width: 100%;
-    text-align: center;
-  }
   div {
     padding: 0 16px;
     margin-bottom: 16px;

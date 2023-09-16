@@ -19,6 +19,7 @@
   input {
     margin: 0;
     -webkit-appearance: none;
+    appearance: none;
     position: relative;
     width: 40px;
     height: 20px;

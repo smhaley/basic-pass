@@ -18,8 +18,6 @@
   $: console.log($appliedFilters);
 </script>
 
-<h2 class="heading-container">Tag Filters</h2>
-
 {#if $availableFilters.length}
   <form class="filter-container" on:submit={handleFilterSubmit}>
     {#each $availableFilters as tag}
@@ -60,15 +58,6 @@
     width: 20px;
     height: 20px;
     margin-right: 10px;
-  }
-
-  h2 {
-    margin: 0;
-  }
-
-  .heading-container {
-    width: 100%;
-    text-align: center;
   }
 
   button {
