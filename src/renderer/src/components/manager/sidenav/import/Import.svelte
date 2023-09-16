@@ -37,38 +37,32 @@
   };
 </script>
 
-<div class="export-container">
-  {#if !filename}
-    <div in:fade={{ delay: 90 }}>
-      <p>You may import a previously exported table store.</p>
-      <strong>Once a store import is finalized, the change cannot be undone.</strong>
-      <p>
-        All aspects of the the import, including the password, will overwrite those of the current
-        logged in store account.
-      </p>
+{#if !filename}
+  <div in:fade={{ delay: 90 }}>
+    <p>You may import a previously exported table store.</p>
+    <strong>Once a store import is finalized, the change cannot be undone.</strong>
+    <p>
+      All aspects of the the import, including the password, will overwrite those of the current
+      logged in store account.
+    </p>
 
-      <p>
-        The password used to decrypt the imported table will become the password for the current
-        logged in store.
-      </p>
+    <p>
+      The password used to decrypt the imported table will become the password for the current
+      logged in store.
+    </p>
 
-      <div class="button-group">
-        <label for="file-upload" class="file-upload primary-button"> Upload Store </label>
-        <input id="file-upload" type="file" on:change={handleUpload} />
-      </div>
+    <div class="button-group">
+      <label for="file-upload" class="file-upload primary-button"> Upload Store </label>
+      <input id="file-upload" type="file" on:change={handleUpload} />
     </div>
-  {:else}
-    {#key mountKey}
-      <ImportConfirm on:close on:cancel={handleCancel} {filename} {cypherText} />
-    {/key}
-  {/if}
-</div>
+  </div>
+{:else}
+  {#key mountKey}
+    <ImportConfirm on:close on:cancel={handleCancel} {filename} {cypherText} />
+  {/key}
+{/if}
 
 <style>
-  .export-container {
-    padding: 0 16px;
-  }
-
   input[type='file'] {
     display: none;
   }

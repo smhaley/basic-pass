@@ -16,12 +16,4 @@
   };
 </script>
 
-<div>
-  <UserForm on:userData={handleUpdate} currentUsername={$userStore.username} />
-</div>
-
-<style>
-  div {
-    padding: 16px;
-  }
-</style>
+<UserForm on:userData={handleUpdate} currentUsername={$userStore.username} />

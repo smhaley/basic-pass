@@ -23,6 +23,6 @@
 
 <style>
   .settings-container {
-    padding: 40px;
+    padding-top: 40px;
   }
 </style>
