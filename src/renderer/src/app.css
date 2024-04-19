@@ -116,8 +116,7 @@ textarea {
   border-radius: 2px;
 }
 
-button,
-.file-upload {
+button {
   padding: 12px 15px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -233,6 +232,12 @@ select {
 
 input[type='checkbox'] {
   accent-color: var(--light-blue);
+}
+
+.import-export-buttons {
+  margin-top: 16px;
+  max-width: 290px;
+  margin-left: auto;
 }
 
 .icon-button {

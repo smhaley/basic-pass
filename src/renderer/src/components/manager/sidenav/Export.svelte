@@ -26,13 +26,7 @@
 <p>The file may be used to transfer table data between machines or store accounts.</p>
 <p>Altering the exported file may corrupt the encrypted table.</p>
 <div class="button-group">
-  <button class="primary-button" on:click={downloadTableFile}>Download Store Table</button>
+  <button class="primary-button import-export-buttons" on:click={downloadTableFile}
+    >Download Store Table</button
+  >
 </div>
-
-<style>
-  button {
-    margin-top: 16px;
-    max-width: 290px;
-    margin-left: auto;
-  }
-</style>

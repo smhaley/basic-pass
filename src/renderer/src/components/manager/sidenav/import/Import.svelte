@@ -5,6 +5,7 @@
   let cypherText: string;
   let filename: string;
   let mountKey = 0;
+  let fileInput: HTMLInputElement;
 
   const handleUpload = () => {
     mountKey = mountKey++;
@@ -24,6 +25,10 @@
         window.alert('Please check your file and try again');
       }
     };
+  };
+
+  const triggerFileUpload = () => {
+    fileInput.click();
   };
 
   const resetImportState = () => {
@@ -52,8 +57,16 @@
     </p>
 
     <div class="button-group">
-      <label for="file-upload" class="file-upload primary-button"> Upload Store </label>
-      <input id="file-upload" type="file" on:change={handleUpload} />
+      <button class="primary-button import-export-buttons" on:click={triggerFileUpload}
+        >Upload Store</button
+      >
+      <input
+        id="file-upload"
+        type="file"
+        bind:this={fileInput}
+        on:change={handleUpload}
+        class="visually-hidden"
+      />
     </div>
   </div>
 {:else}
@@ -63,13 +76,14 @@
 {/if}
 
 <style>
-  input[type='file'] {
-    display: none;
-  }
-
-  label {
-    margin-top: 16px;
-    max-width: 260px;
-    margin-left: auto;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 </style>
