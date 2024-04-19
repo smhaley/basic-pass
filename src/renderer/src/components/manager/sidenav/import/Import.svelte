@@ -86,4 +86,9 @@
     clip: rect(0, 0, 0, 0);
     border: 0;
   }
+
+  strong {
+    color: var(--red);
+    font-size: 1.2rem;
+  }
 </style>
