@@ -12,7 +12,6 @@
   import TagFilter from './Filter.svelte';
   import NewSiteEntry from './NewSiteEntry.svelte';
   import UpdatePass from './UpdatePass.svelte';
-  import { clickOutside } from '../../../utils/clickOutside';
   import Export from './Export.svelte';
   import Import from './import/Import.svelte';
   import { appliedFilters, sideNavOpen } from '../../../stores/store';
@@ -103,7 +102,6 @@
   on:keydown={sideNaveKeyActions}
   style={!$sideNavOpen && 'width: 70px'}
   class="sidenav"
-  use:clickOutside
   on:outClick={handleClose}
   bind:this={sideNavRef}
 >
