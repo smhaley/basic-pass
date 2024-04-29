@@ -1,6 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import { availableFilters } from '../../stores/store';
   import InputSection from '../../lib/InputSection.svelte';
+  import InputSelect from '../../lib/InputSelect.svelte';
   import * as ErrorUtils from '../error-utils';
 
   import { TABLE_ENTRY, type SiteDataAction, type SiteData } from '../../actions/tableDataActions';
@@ -88,7 +90,9 @@
       errMsgs={ErrorUtils.usernameErrMsgs}
       bind:value={username}
     />
-    <InputSection label={'Tag'} errs={undefined} errMsgs={undefined} bind:value={tag} />
+
+    <InputSelect label={'Tag'} bind:value={tag} options={$availableFilters} />
+
     {#if newPassphrase || showPassInput}
       <InputSection
         label={'New Passphrase'}
