@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { ErrMsgs, ErrObj } from '../components/error-utils';
+  import type { ErrMsgs, ErrObj } from '../../components/error-utils';
   import MenuDownOutline from 'svelte-material-icons/MenuDownOutline.svelte';
-  import { clickOutside } from '../utils/clickOutside';
-  import { fuzzyMatch } from '../stores/utils';
+  import { clickOutside } from '../../utils/clickOutside';
+  import { fuzzyMatch } from '../../stores/utils';
+  import { BgStyle } from './InputSelect.types';
 
   export let label: string;
   export let errs: ErrObj | undefined = undefined;
@@ -10,6 +11,7 @@
   export let value: string;
   export let type = 'text';
   export let options: string[] = undefined;
+  export let bgStyle: BgStyle;
 
   let isDropdownOpen = false;
   let listItems = [];
@@ -30,8 +32,8 @@
   const openDropDown = (e?: Event) => {
     e && e.preventDefault();
     isDropdownOpen = true;
-    focusedItemIndex = 0; // Focus on the first item when opening the dropdown
-    listItems[focusedItemIndex]?.focus(); // Focus on the first item
+    focusedItemIndex = 0;
+    listItems[focusedItemIndex]?.focus();
   };
 
   const closeDropDown = () => {
@@ -76,17 +78,15 @@
   const handleChange = (e: Event) => {
     const newTag = (e.target as HTMLInputElement).value;
     const updatedItems = [];
-    const visibleNodes = [];
 
     let hasExact = false;
 
-    options.forEach((val, idx) => {
+    options.forEach((val) => {
       if (newTag?.toLowerCase() === val.toLowerCase()) {
         hasExact = true;
       }
       if (fuzzyMatch(newTag.toLowerCase(), val.toLowerCase())) {
         updatedItems.push({ label: val, value: val.toLowerCase() });
-        visibleNodes.push(listItems[idx]);
       }
     });
 
@@ -96,18 +96,17 @@
     activeOptions = updatedItems;
     focusedItemIndex = -1;
   };
-  $: {
-    isDropdownOpen;
-  }
 </script>
 
 <div
+  id="myInput"
   class="section autocomplete__container"
   role="combobox"
   on:outClick={() => (isDropdownOpen = false)}
   aria-labelledby="autocomplete-label"
   aria-expanded={isDropdownOpen}
   use:clickOutside
+  aria-controls="autocomplete-input"
 >
   <label for={label}>{label}</label>
   <input
@@ -128,10 +127,14 @@
   {#if Array.isArray(options)}
     <div
       class="icon-span"
+      style:background-color={bgStyle === BgStyle.primary
+        ? 'var(--bg-color)'
+        : 'var(--bg-secondary)'}
       on:click={(e) => {
         isDropdownOpen = !isDropdownOpen;
         return isDropdownOpen ? openDropDown(e) : closeDropDown();
       }}
+      on:keydown={handleKeydown}
     >
       <span class="indicator-separator" />
       <span class={`autocomplete__dropdown-arrow`}>
@@ -142,9 +145,13 @@
       role="listbox"
       id="autocomplete-results"
       class={`autocomplete__results ${isDropdownOpen && 'visible'}`}
+      style:background-color={bgStyle === BgStyle.primary
+        ? 'var(--bg-color)'
+        : 'var(--bg-secondary)'}
     >
       {#each activeOptions as option, index}
         <li
+          on:keydown={handleKeydown}
           bind:this={listItems[index]}
           on:click={() => {
             value = option.value;
@@ -155,7 +162,6 @@
           }}
           class={`autocomplete-item ${focusedItemIndex === index && 'focus'}`}
           id="autocomplete-item-index"
-          role="listitem"
         >
           {option.label}
         </li>
@@ -179,16 +185,16 @@
 
   .autocomplete__container {
     position: relative;
-    margin-top: '0.8rem';
     width: 100%;
-    /* max-width: 350px; */
   }
 
   .autocomplete__results.visible {
     z-index: 10;
     margin-top: -10px;
-    background-color: var(--bg-color);
+    background-color: var(--bg-secondary);
+    border-color: var(--green);
     visibility: visible;
+    box-shadow: var(--container-shadow);
   }
 
   .autocomplete__input {
@@ -200,7 +206,6 @@
   }
 
   .autocomplete__input:focus {
-    /* border-color: hsl(221, 61%, 40%); */
     border-color: var(--link-color);
   }
 
@@ -223,7 +228,7 @@
     transition: transform 0.2s linear;
     width: 40px;
     z-index: 11;
-    background: var(--bg-secondary);
+    background: inherit;
   }
 
   .autocomplete__results {
@@ -245,7 +250,7 @@
   }
 
   .autocomplete__results > li:hover {
-    color: black;
+    color: white;
     background: var(--link-hover);
   }
 
@@ -276,5 +281,6 @@
 
   .autocomplete-item.focus {
     background: var(--link-color);
+    color: white;
   }
 </style>

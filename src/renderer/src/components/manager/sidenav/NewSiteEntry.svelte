@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { BasicCrypto } from '../../../utils/crypto/basic-crypto';
   import { userStore } from '../../../stores/store';
+  import { BgStyle } from '../../../lib/InputSelect/InputSelect.types';
 
   const dispatch = createEventDispatcher();
 
@@ -27,7 +28,7 @@
 </script>
 
 <div>
-  <SiteForm on:tableEntry={handleNewEntry} {siteExistsError} />
+  <SiteForm on:tableEntry={handleNewEntry} {siteExistsError} bgStyle={BgStyle.secondary} />
 </div>
 
 <style>
