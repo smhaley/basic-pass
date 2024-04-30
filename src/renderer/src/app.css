@@ -15,7 +15,7 @@
   --red-dark: #c21826;
   --red-hov: #ba2c38;
   --purple-light: #9c2780;
-  --purple: #572780;
+  --purple: #5e298d;
   --purple-hov: #5f3782;
   --blue: #272a80;
   --mid-blue: #276880;
@@ -58,15 +58,15 @@
 }
 
 [data-theme='light'] {
-  --font-color: #333;
+  --font-color: #575656;
   --link-color: #0a86da;
   --link-white-color: rgb(0, 100, 200);
   --bg-color: #f8f8f8;
   --bg-secondary: #f3f0f0;
   --icon-hov-color-primary: rgba(0, 0, 0, 0.04);
   --active-green-tab: #087132;
-  --tooltip-bg: #333;
-  --tooltip-color: #c1bfbd;
+  --tooltip-bg: #575656;
+  --tooltip-color: #edebe8;
 }
 
 html,
@@ -116,8 +116,7 @@ textarea {
   border-radius: 2px;
 }
 
-button,
-.file-upload {
+button {
   padding: 12px 15px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -235,6 +234,12 @@ input[type='checkbox'] {
   accent-color: var(--light-blue);
 }
 
+.import-export-buttons {
+  margin-top: 16px;
+  max-width: 290px;
+  margin-left: auto;
+}
+
 .icon-button {
   color: inherit;
   border: 0;
@@ -270,4 +275,18 @@ input[type='checkbox'] {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.tooltip {
+  position: fixed;
+  border-radius: 5px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  z-index: 999;
+  text-transform: capitalize;
+  font-weight: bold;
 }

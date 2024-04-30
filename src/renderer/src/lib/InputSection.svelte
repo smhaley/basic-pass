@@ -1,23 +1,21 @@
 <script lang="ts">
-  import type { ErrMsgs, ErrObj } from "../components/error-utils";
+  import type { ErrMsgs, ErrObj } from '../components/error-utils';
 
   export let label: string;
-  export let errs: ErrObj | undefined;
-  export let errMsgs: ErrMsgs | undefined;
+  export let errs: ErrObj | undefined = undefined;
+  export let errMsgs: ErrMsgs | undefined = undefined;
   export let value: string;
-  export let type = "text";
+  export let type = 'text';
 
   const typeAction = (node: HTMLInputElement) => {
-  node.type = type;
+    node.type = type;
   };
 </script>
 
 <div class="section">
   <label for={label}>{label}</label>
   <input
-    class={`${
-      errs && (errs.missing || errs.invalid) && "err-input"
-    } text-input`}
+    class={`${errs && (errs.missing || errs.invalid) && 'err-input'} text-input`}
     id={label}
     use:typeAction
     bind:value

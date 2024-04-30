@@ -5,6 +5,7 @@
   let cypherText: string;
   let filename: string;
   let mountKey = 0;
+  let fileInput: HTMLInputElement;
 
   const handleUpload = () => {
     mountKey = mountKey++;
@@ -26,6 +27,10 @@
     };
   };
 
+  const triggerFileUpload = () => {
+    fileInput.click();
+  };
+
   const resetImportState = () => {
     mountKey = mountKey++;
     cypherText = undefined;
@@ -37,53 +42,53 @@
   };
 </script>
 
-<div class="export-container">
-  <div class="heading-container">
-    <h2>Store Import</h2>
-  </div>
-  {#if !filename}
-    <div in:fade={{ delay: 90 }}>
-      <p>You may import a previously exported table store.</p>
-      <strong>Once a store import is finalized, the change cannot be undone.</strong>
-      <p>
-        All aspects of the the import, including the password, will overwrite those of the current
-        logged in store account.
-      </p>
+{#if !filename}
+  <div in:fade={{ delay: 90 }}>
+    <p>You may import a previously exported table store.</p>
+    <strong>Once a store import is finalized, the change cannot be undone.</strong>
+    <p>
+      All aspects of the the import, including the password, will overwrite those of the current
+      logged in store account.
+    </p>
 
-      <p>
-        The password used to decrypt the imported table will become the password for the current
-        logged in store.
-      </p>
+    <p>
+      The password used to decrypt the imported table will become the password for the current
+      logged in store.
+    </p>
 
-      <div class="button-group">
-        <label for="file-upload" class="file-upload primary-button"> Upload Store </label>
-        <input id="file-upload" type="file" on:change={handleUpload} />
-      </div>
+    <div class="button-group">
+      <button class="primary-button import-export-buttons" on:click={triggerFileUpload}
+        >Upload Store</button
+      >
+      <input
+        id="file-upload"
+        type="file"
+        bind:this={fileInput}
+        on:change={handleUpload}
+        class="visually-hidden"
+      />
     </div>
-  {:else}
-    {#key mountKey}
-      <ImportConfirm on:close on:cancel={handleCancel} {filename} {cypherText} />
-    {/key}
-  {/if}
-</div>
+  </div>
+{:else}
+  {#key mountKey}
+    <ImportConfirm on:close on:cancel={handleCancel} {filename} {cypherText} />
+  {/key}
+{/if}
 
 <style>
-  .export-container {
-    padding: 0 16px;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 
-  .heading-container {
-    width: 100%;
-    text-align: center;
-  }
-
-  input[type='file'] {
-    display: none;
-  }
-
-  label {
-    margin-top: 16px;
-    max-width: 260px;
-    margin-left: auto;
+  strong {
+    color: var(--red);
+    font-size: 1.2rem;
   }
 </style>

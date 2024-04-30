@@ -2,6 +2,7 @@
   import { afterUpdate } from 'svelte';
   import Snack from '../../../lib/Snack.svelte';
   import More from 'svelte-material-icons/DotsHorizontal.svelte';
+  import InformationOutline from 'svelte-material-icons/InformationOutline.svelte';
   import ContentCopy from 'svelte-material-icons/ContentCopy.svelte';
   import TablePaginate from './TablePaginate.svelte';
   import Modal from '../../../lib/Modal.svelte';
@@ -15,26 +16,33 @@
     currentSearch,
     tableSize,
     tableSort,
-    paginate
+    paginate,
+    settingsStore
   } from '../../../stores/store';
   import TableAction from './tableAction/TableAction.svelte';
   import TableTools from './TableTools.svelte';
   import { paginateTableData } from '../../../stores/utils';
-
   import type { SiteData, DeleteTableEntry } from '../../../actions/tableDataActions';
   import type { TableData } from '../../../stores/tableStore';
+  import { RIGHT_CLICK_SHOW } from '../../../stores/settingsStore';
 
   let showSnack = false;
   let isOpen = false;
   let currentSiteKey: string;
   let copyCounter = 1;
+  let rightClickToolTip: { x: number; y: number; passphrase: string };
 
   let buttonRefs: { [key: string]: HTMLButtonElement } = {};
+  let tableRef: HTMLDivElement;
+  let passRefs: { [key: string]: HTMLButtonElement } = {};
   let emptyTableMessage: string = '';
   let visibleRows: TableData;
 
   $: tableResultsSize = $tableResults ? Object.keys($tableResults).length : 0;
-  $: $paginate, (visibleRows = paginateTableData($tableResults, $paginate));
+
+  $: $paginate,
+    (visibleRows = paginateTableData($tableResults, $paginate)),
+    (currentSiteKey = undefined);
 
   const dataCols = ['user', 'date', 'tag'];
   const buttonCols = ['passphrase', 'actions'];
@@ -64,6 +72,26 @@
     }
   };
 
+  const handlePassRightClick = (siteKey: string) => {
+    if ($tableStore && $tableStore[siteKey]) {
+      const node = passRefs[siteKey];
+      const tableBound = tableRef.getBoundingClientRect();
+      const buttonBound = node.getBoundingClientRect();
+      const { passphrase } = $tableStore[siteKey];
+
+      rightClickToolTip = {
+        x: tableBound.right - buttonBound.x + 10,
+        y: buttonBound.y + 2,
+        passphrase
+      };
+    }
+  };
+
+  const handleClosePassTooltip = () => {
+    if (rightClickToolTip) {
+      rightClickToolTip = undefined;
+    }
+  };
   const handleMoreClick = (site: string) => {
     isOpen = true;
     currentSiteKey = site;
@@ -99,7 +127,7 @@
   });
 </script>
 
-<div class="table-container">
+<div bind:this={tableRef} class="table-container">
   {#if $tableSize > 0}
     <div class="table-content">
       <div class="pass-table">
@@ -123,6 +151,7 @@
                           class:active-sort={$tableSort === 'ascending'}
                         >
                           <Up size={'2rem'} />
+                          <InformationOutline size={'1rem'} />
                         </button>
                       {/if}
                     </th>
@@ -138,8 +167,15 @@
                       <td class="data-col">{rowData}</td>
                     {/each}
                     <td class="icon-data">
-                      <button on:click={() => handlePassClick(rowKey)} class="icon-button"
-                        ><ContentCopy size={'1.4em'} /></button
+                      <button
+                        bind:this={passRefs[rowKey]}
+                        on:click={() => handlePassClick(rowKey)}
+                        on:contextmenu={$settingsStore[RIGHT_CLICK_SHOW]
+                          ? () => handlePassRightClick(rowKey)
+                          : undefined}
+                        on:mouseleave={handleClosePassTooltip}
+                        on:mouseup={handleClosePassTooltip}
+                        class="icon-button"><ContentCopy size={'1.4em'} /></button
                       >
                     </td>
                     <td class="icon-data">
@@ -178,6 +214,12 @@
   />
 </Modal>
 
+{#if rightClickToolTip}
+  <div class="tooltip" style={`right: ${rightClickToolTip.x}px; top: ${rightClickToolTip.y}px;`}>
+    {rightClickToolTip.passphrase}
+  </div>
+{/if}
+
 <style>
   .icon-data {
     text-align: center;
@@ -207,7 +249,6 @@
   }
 
   .table-container {
-    /* overflow: hidden; */
     margin-left: 80px;
     margin-top: 16px;
   }

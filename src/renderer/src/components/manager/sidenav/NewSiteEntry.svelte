@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { BasicCrypto } from '../../../utils/crypto/basic-crypto';
   import { userStore } from '../../../stores/store';
+  import { BgStyle } from '../../../lib/InputSelect/InputSelect.types';
 
   const dispatch = createEventDispatcher();
 
@@ -26,21 +27,12 @@
   };
 </script>
 
-<h2 class="heading-container">New Site Entry</h2>
 <div>
-  <SiteForm on:tableEntry={handleNewEntry} {siteExistsError} />
+  <SiteForm on:tableEntry={handleNewEntry} {siteExistsError} bgStyle={BgStyle.secondary} />
 </div>
 
 <style>
-  h2 {
-    margin: 0;
-  }
-  .heading-container {
-    width: 100%;
-    text-align: center;
-  }
   div {
-    padding: 0 16px;
     margin-bottom: 16px;
   }
 </style>

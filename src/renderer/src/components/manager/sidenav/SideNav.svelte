@@ -5,16 +5,19 @@
   import Close from 'svelte-material-icons/Close.svelte';
   import Account from 'svelte-material-icons/Account.svelte';
   import ShipWheel from 'svelte-material-icons/ShipWheel.svelte';
+  import Cog from 'svelte-material-icons/Cog.svelte';
+  import Settings from './Settings.svelte';
   import DatabaseImport from 'svelte-material-icons/DatabaseImport.svelte';
   import Lock from 'svelte-material-icons/Lock.svelte';
   import TagFilter from './Filter.svelte';
   import NewSiteEntry from './NewSiteEntry.svelte';
   import UpdatePass from './UpdatePass.svelte';
-  import { clickOutside } from '../../../utils/clickOutside';
   import Export from './Export.svelte';
   import Import from './import/Import.svelte';
   import { appliedFilters, sideNavOpen } from '../../../stores/store';
   import { trapFocus } from '../../../utils/trapFocus';
+  import SideNavItem from './SideNavItem.svelte';
+
   let isOpen = false;
 
   let closeButtonRef: HTMLButtonElement;
@@ -44,6 +47,11 @@
       id: 'import',
       label: 'Import Store Data',
       component: DatabaseImport
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      component: Cog
     }
   ];
 
@@ -52,11 +60,12 @@
   };
 
   const sideNavigation = {
-    filter: TagFilter,
-    newEntry: NewSiteEntry,
-    account: UpdatePass,
-    export: Export,
-    import: Import
+    filter: { component: TagFilter, label: 'Tag Filters' },
+    newEntry: { component: NewSiteEntry, label: 'New Site Entry' },
+    account: { component: UpdatePass, label: 'Update Store Passphrase' },
+    export: { component: Export, label: 'Store Export' },
+    import: { component: Import, label: 'Store Import' },
+    settings: { component: Settings, label: 'Settings' }
   };
 
   const handleIconClick = (icon: string) => {
@@ -93,7 +102,6 @@
   on:keydown={sideNaveKeyActions}
   style={!$sideNavOpen && 'width: 70px'}
   class="sidenav"
-  use:clickOutside
   on:outClick={handleClose}
   bind:this={sideNavRef}
 >
@@ -133,7 +141,12 @@
 
   {#if $sideNavOpen}
     <div in:fade={{ delay: 90 }}>
-      <svelte:component this={sideNavigation[activeNavigation]} on:close={handleClose} />
+      <SideNavItem name={sideNavigation[activeNavigation].label}>
+        <svelte:component
+          this={sideNavigation[activeNavigation].component}
+          on:close={handleClose}
+        />
+      </SideNavItem>
     </div>
   {/if}
 </div>
@@ -142,7 +155,7 @@
 {/if}
 
 {#if activeToolTip}
-  <div class="tooltip" style={`top: ${activeToolTip.position + 8}px`}>
+  <div class="tooltip" style={`top: ${activeToolTip.position + 8}px; left: 71px;`}>
     {activeToolTip.label}
   </div>
 {/if}
@@ -198,21 +211,6 @@
     justify-content: center;
     padding: 20px;
     z-index: 9;
-  }
-
-  .tooltip {
-    position: fixed;
-    border-radius: 5px;
-    left: 71px;
-    background: var(--tooltip-bg);
-    color: var(--tooltip-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    z-index: 999;
-    text-transform: capitalize;
-    font-weight: bold;
   }
 
   .engaged-icon {
