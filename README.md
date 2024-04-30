@@ -1,6 +1,6 @@
 # basic-pass
 
-No frill pass management with zero IO from you machine. 
+No frills pass management with zero IO from you machine. 
 
 You are in the driver seat, pass stores are exportable and sharable if you choose. All data is AES 256 encrypted.
 
