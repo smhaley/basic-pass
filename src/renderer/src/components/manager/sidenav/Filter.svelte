@@ -14,8 +14,6 @@
     appliedFilters.set([]);
     dispatch('close');
   };
-
-  $: console.log($appliedFilters);
 </script>
 
 {#if $availableFilters.length}
