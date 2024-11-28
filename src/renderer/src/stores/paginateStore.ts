@@ -13,7 +13,8 @@ const resetTableOffset = (tableData: TableData, rowSize: number): [number, numbe
 };
 
 export const createPaginateStore = () => {
-  const rows = parseInt(localStorage.getItem(ROW_SIZE)) ?? 5;
+  const storedRowSize = localStorage.getItem(ROW_SIZE)
+  const rows = storedRowSize ? parseInt(storedRowSize) : 5;
   const initialState = { rowSize: rows };
   const store: Writable<PaginateStore> = writable(initialState);
   const { subscribe, update, set } = store;
