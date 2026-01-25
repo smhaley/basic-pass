@@ -40,6 +40,9 @@
 
   onMount(async () => {
     existingUsers = await BasicCrypto.getStoreNames();
+    if (existingUsers.length === 0) {
+      loginView = false;
+    }
   });
 </script>
 
@@ -66,7 +69,6 @@
     margin: 0 auto;
     height: 95vh;
     overflow: hidden;
-
   }
 
   .container {

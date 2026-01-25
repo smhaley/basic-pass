@@ -44,6 +44,8 @@
     (visibleRows = paginateTableData($tableResults, $paginate)),
     (currentSiteKey = undefined);
 
+    
+
   const dataCols = ['user', 'date', 'tag'];
   const buttonCols = ['passphrase', 'actions'];
   const tableCols = ['site', ...dataCols, ...buttonCols];

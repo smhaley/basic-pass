@@ -62,10 +62,10 @@
   const sideNavigation = {
     filter: { component: TagFilter, label: 'Tag Filters' },
     newEntry: { component: NewSiteEntry, label: 'New Site Entry' },
-    account: { component: UpdatePass, label: 'Update Store Passphrase' },
+    account: { component: UpdatePass, label: 'Update Store Auth' },
     export: { component: Export, label: 'Store Export' },
     import: { component: Import, label: 'Store Import' },
-    settings: { component: Settings, label: 'Settings' }
+    settings: { component: Settings, label: 'Store Settings' }
   };
 
   const handleIconClick = (icon: string) => {

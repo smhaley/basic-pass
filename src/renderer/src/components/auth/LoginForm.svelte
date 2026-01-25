@@ -1,16 +1,15 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import * as ErrorUtils from "../error-utils";
-  import InputSection from "../../lib/InputSection.svelte";
-  import type { UserAction } from "../../actions/authActions";
+  import { createEventDispatcher } from 'svelte';
+  import * as ErrorUtils from '../error-utils';
+  import InputSection from '../../lib/InputSection.svelte';
+  import type { UserAction } from '../../actions/authActions';
 
   export let existingUsers: string[];
   export let incorrectPassphrase = false;
 
-  $: incorrectPassphrase,
-    (passphraseError = { ...passphraseError, invalid: incorrectPassphrase });
+  $: incorrectPassphrase, (passphraseError = { ...passphraseError, invalid: incorrectPassphrase });
 
-  let username: string;
+  let username: string = existingUsers[0];
   let passphrase: string;
 
   let usernameError: ErrorUtils.ErrObj = ErrorUtils.baseError;
@@ -23,23 +22,23 @@
     usernameError = ErrorUtils.validateExistingUser(username, existingUsers);
     passphraseError = ErrorUtils.validatePassphrase(passphrase);
     if (ErrorUtils.doesErrorExist([usernameError, passphraseError])) {
-      dispatch("userData", {
+      dispatch('userData', {
         username,
-        passphrase,
+        passphrase
       });
     }
   };
 </script>
 
 <form on:submit={handleSubmit}>
+  <label for="row-size" class="row-label">Store Name</label>
+  <select class="text-input" bind:value={username} disabled={existingUsers.length === 0}>
+    {#each existingUsers as user}
+      <option>{user}</option>
+    {/each}
+  </select>
   <InputSection
-    label={"Store Name"}
-    errs={usernameError}
-    errMsgs={ErrorUtils.loginUserErrMsgs}
-    bind:value={username}
-  />
-  <InputSection
-    label={"Passphrase"}
+    label={'Passphrase'}
     errs={passphraseError}
     type="password"
     errMsgs={ErrorUtils.loginPassErrMsgs}

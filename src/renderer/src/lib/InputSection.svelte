@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ErrMsgs, ErrObj } from '../components/error-utils';
-
   export let label: string;
   export let errs: ErrObj | undefined = undefined;
   export let errMsgs: ErrMsgs | undefined = undefined;

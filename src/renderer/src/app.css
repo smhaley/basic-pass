@@ -116,6 +116,18 @@ textarea {
   border-radius: 2px;
 }
 
+  select {
+    background-color: inherit;
+  }
+
+  option {
+    background-color: var(--bg-color);
+  }
+
+  select,
+  option {
+    color: var(--font-color);
+  }
 button {
   padding: 12px 15px;
   font-size: 1.2rem;
@@ -233,6 +245,8 @@ select {
 input[type='checkbox'] {
   accent-color: var(--light-blue);
 }
+
+
 
 .import-export-buttons {
   margin-top: 16px;

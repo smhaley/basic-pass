@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
+import { BasicCrypto } from '../utils/crypto/basic-crypto';
 
 export type UserStore = {
   username?: string;
@@ -17,6 +18,16 @@ export const createUserStore = () => {
       set({ isAuthenticated: true, username, passphrase });
     },
     logout: () => set(initialState),
-    updatePass: (passphrase: string) => update((user) => ({ ...user, passphrase }))
+    updatePass: (passphrase: string) => update((user) => ({ ...user, passphrase })),
+    // New logic to handle your requirement
+    deleteUserStore: () => {
+      const currentUser = get(store);
+      console.log({ store });
+
+      if (currentUser.username && currentUser.passphrase) {
+        const basicCrypto = new BasicCrypto(currentUser.passphrase, currentUser.username);
+        basicCrypto.deleteUserStore();
+      }
+    }
   };
 };

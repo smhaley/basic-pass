@@ -59,6 +59,11 @@ export const logout = () => {
   clearAuxStates();
 };
 
+export const deleteUserStore = () => {
+  userStore.deleteUserStore();
+  logout();
+};
+
 export const loadNewTable = (storePass: string, tableData: TableData) => {
   userStore.updatePass(storePass);
   tableStore.setTableData(tableData);

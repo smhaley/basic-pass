@@ -35,6 +35,10 @@ export class BasicCrypto {
     return this.decryptTable(store);
   };
 
+  deleteUserStore = async () => {
+    return await window.BasicPass.deleteUserStore([this.username]);
+  };
+
   static createNewUserStore = async (username: string, passphrase: string) => {
     const basicCrypto = new BasicCrypto(passphrase, username);
     const initialTableCypher = basicCrypto.encryptTable({});
