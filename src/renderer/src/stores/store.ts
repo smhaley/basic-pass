@@ -1,4 +1,4 @@
-import { writable, derived, get } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { createUserStore } from './userStore';
 import { filterTableByTag, filterBySearch, sortBySite } from './utils';
