@@ -21,7 +21,7 @@
 <div>
   <h3>Update Passphrase</h3>
   <UserForm on:userData={handleUpdate} currentUsername={$userStore.username} />
-  <h3>Delete Store</h3>
+  <h3>Delete Store: {$userStore.username}</h3>
 
   {#if !initiateDelete}
     <div class="button-group" in:fade={{ delay: 90 }}>

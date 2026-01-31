@@ -19,10 +19,8 @@ export const createUserStore = () => {
     },
     logout: () => set(initialState),
     updatePass: (passphrase: string) => update((user) => ({ ...user, passphrase })),
-    // New logic to handle your requirement
     deleteUserStore: () => {
       const currentUser = get(store);
-      console.log({ store });
 
       if (currentUser.username && currentUser.passphrase) {
         const basicCrypto = new BasicCrypto(currentUser.passphrase, currentUser.username);

@@ -4,6 +4,7 @@
   import { clickOutside } from '../../utils/clickOutside';
   import { fuzzyMatch } from '../../stores/utils';
   import { BgStyle } from './InputSelect.types';
+  import { tick } from 'svelte';
 
   export let label: string;
   export let errs: ErrObj | undefined = undefined;
@@ -12,6 +13,7 @@
   export let type = 'text';
   export let options: string[] = undefined;
   export let bgStyle: BgStyle;
+  export let showCreate: boolean = true;
 
   let isDropdownOpen = false;
   let listItems = [];
@@ -23,22 +25,38 @@
     };
   });
 
+  let initialized = false;
+
+  $: if (!initialized && options && options.length > 0) {
+    activeOptions = options.map((v) => ({ label: v, value: v }));
+    listItems = new Array(activeOptions.length);
+    initialized = true;
+  }
+
   const typeAction = (node: HTMLInputElement) => {
     node.type = type;
   };
 
   let focusedItemIndex = -1;
 
-  const openDropDown = (e?: Event) => {
-    e && e.preventDefault();
+  const openDropDown = async (e?: Event) => {
+    e?.preventDefault();
     isDropdownOpen = true;
-    focusedItemIndex = 0;
-    listItems[focusedItemIndex]?.focus();
+
+    const currentIndex = activeOptions.findIndex((opt) => opt.value === value);
+    focusedItemIndex = currentIndex !== -1 ? currentIndex : 0;
+
+    await tick();
+    if (listItems[focusedItemIndex]) {
+      listItems[focusedItemIndex].focus();
+      listItems[focusedItemIndex].scrollIntoView({ block: 'nearest' });
+    }
   };
 
   const closeDropDown = () => {
     isDropdownOpen = false;
     focusedItemIndex = -1;
+    activeOptions = options.map((v) => ({ label: v, value: v }));
   };
 
   const scrollToFocusedItem = () => {
@@ -62,7 +80,9 @@
     if (event.key === 'Enter') {
       event.preventDefault();
       isDropdownOpen = false;
+
       value = activeOptions[focusedItemIndex].value;
+      closeDropDown();
     }
     if (event.key === 'ArrowDown') {
       if (!isDropdownOpen) {
@@ -90,7 +110,7 @@
       }
     });
 
-    if (newTag.length > 0 && !hasExact) {
+    if (newTag.length > 0 && !hasExact && showCreate) {
       updatedItems.push({ label: `Create: "${newTag}"`, value: newTag });
     }
     activeOptions = updatedItems;
@@ -124,7 +144,7 @@
     }}
   />
 
-  {#if Array.isArray(options)}
+  {#if Array.isArray(options) && (activeOptions.length > 0 || showCreate)}
     <div
       class="icon-span"
       style:background-color={bgStyle === BgStyle.primary

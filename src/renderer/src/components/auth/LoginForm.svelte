@@ -3,9 +3,12 @@
   import * as ErrorUtils from '../error-utils';
   import InputSection from '../../lib/InputSection.svelte';
   import type { UserAction } from '../../actions/authActions';
+  import InputSelect from '../../lib/InputSelect/InputSelect.svelte';
+  import { BgStyle } from '../../lib/InputSelect/InputSelect.types';
 
   export let existingUsers: string[];
   export let incorrectPassphrase = false;
+  export let bgStyle: BgStyle = BgStyle.secondary;
 
   $: incorrectPassphrase, (passphraseError = { ...passphraseError, invalid: incorrectPassphrase });
 
@@ -30,13 +33,17 @@
   };
 </script>
 
-<form on:submit={handleSubmit}>
-  <label for="row-size" class="row-label">Store Name</label>
-  <select class="text-input" bind:value={username} disabled={existingUsers.length === 0}>
-    {#each existingUsers as user}
-      <option>{user}</option>
-    {/each}
-  </select>
+<form on:submit={handleSubmit}>sss
+  <InputSelect
+    label="Store Name"
+    bind:value={username}
+    options={existingUsers}
+    showCreate={false}
+    errs={usernameError}
+    errMsgs={ErrorUtils.loginUserErrMsgs}
+    
+    {bgStyle}
+  />
   <InputSection
     label={'Passphrase'}
     errs={passphraseError}
