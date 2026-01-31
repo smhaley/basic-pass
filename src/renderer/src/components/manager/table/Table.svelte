@@ -2,7 +2,6 @@
   import { afterUpdate } from 'svelte';
   import Snack from '../../../lib/Snack.svelte';
   import More from 'svelte-material-icons/DotsHorizontal.svelte';
-  import InformationOutline from 'svelte-material-icons/InformationOutline.svelte';
   import ContentCopy from 'svelte-material-icons/ContentCopy.svelte';
   import TablePaginate from './TablePaginate.svelte';
   import Modal from '../../../lib/Modal.svelte';
@@ -153,7 +152,6 @@
                           class:active-sort={$tableSort === 'ascending'}
                         >
                           <Up size={'2rem'} />
-                          <InformationOutline size={'1rem'} />
                         </button>
                       {/if}
                     </th>
