@@ -96,8 +96,15 @@
       activeNavigation = null;
     }
   });
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isOpen) {
+      handleClose()
+    }
+  };
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
 <div
   on:keydown={sideNaveKeyActions}
   style={!$sideNavOpen && 'width: 70px'}
