@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { userStore } from './stores/store';
+  import { settingsStore, userStore } from './stores/store';
   import Manager from './components/manager/Manager.svelte';
   import Login from './components/auth/Login.svelte';
 
 
   $: if ($userStore?.username) {
     const preferredTheme = localStorage.getItem(`${$userStore.username}theme`);
+    settingsStore.loadUser($userStore?.username);
 
     if (preferredTheme) {
       document.documentElement.setAttribute('data-theme', preferredTheme);
