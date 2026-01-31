@@ -14,6 +14,8 @@ export const tableSort: Writable<'ascending' | 'descending'> = writable('ascendi
 export const paginate = createPaginateStore();
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
+// export const settingsStore = createSettingsStore();
+
 export const settingsStore = createSettingsStore();
 
 export const tableResults = derived(
@@ -56,7 +58,13 @@ const clearAuxStates = () => {
 export const logout = () => {
   userStore.logout();
   tableStore.destroyTable();
+  document.documentElement.setAttribute('data-theme', 'dark');
   clearAuxStates();
+};
+
+export const deleteUserStore = () => {
+  userStore.deleteUserStore();
+  logout();
 };
 
 export const loadNewTable = (storePass: string, tableData: TableData) => {

@@ -5,10 +5,12 @@
   import Moon from "svelte-material-icons/MoonWaxingCrescent.svelte";
   import Github from "svelte-material-icons/Github.svelte";
   import ShieldLock from "svelte-material-icons/ShieldLock.svelte";
+  
 
   type Theme = "light" | "dark";
 
-  let theme: Theme = (localStorage.getItem("theme") as Theme) || "dark";
+  let theme: Theme = (localStorage.getItem(`${$userStore.username}theme`) as Theme) ?? "dark";
+
 
   const themeHandler = () => {
     if (theme === "dark") {
@@ -16,7 +18,7 @@
     } else {
       theme = "dark";
     }
-    localStorage.setItem("theme", theme);
+    localStorage.setItem(`${$userStore.username}theme`, theme);
     document.documentElement.setAttribute("data-theme", theme);
   };
 </script>

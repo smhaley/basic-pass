@@ -75,18 +75,6 @@
     display: none;
   }
 
-  select {
-    background-color: inherit;
-  }
-
-  option {
-    background-color: var(--bg-color);
-  }
-
-  select,
-  option {
-    color: var(--font-color);
-  }
 
   .row-label {
     padding-right: 8px;

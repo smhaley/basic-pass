@@ -1,40 +1,56 @@
 import { writable } from 'svelte/store';
-import type { Writable } from 'svelte/store';
 
-const SETTINGS = 'settings';
+const SETTINGS_PREFIX = 'settings_';
 export const RIGHT_CLICK_SHOW = 'rightClickShow';
-
-export const settingsLabelMap = {
-  [RIGHT_CLICK_SHOW]: 'show passphrase on right click'
-};
 
 export interface SettingsStore {
   [RIGHT_CLICK_SHOW]: boolean;
 }
 
-type Setting<T> = {
-  [key in keyof T]?: T[key];
+export const settingsLabelMap = {
+  [RIGHT_CLICK_SHOW]: 'Show passphrase on right click'
 };
 
 const defaultSettings: SettingsStore = { [RIGHT_CLICK_SHOW]: true };
 
 export const createSettingsStore = () => {
-  const savedSettings = localStorage.getItem(SETTINGS);
-  const initialState = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
-  const store: Writable<SettingsStore> = writable(initialState);
-  const { subscribe, update, set } = store;
+  const { subscribe, set, update } = writable<SettingsStore>(defaultSettings);
+
+  let currentUsername = '';
+
+  // Helper to get the user-specific storage key
+  const getStorageKey = (user: string) => `${SETTINGS_PREFIX}${user}`;
+
   return {
     subscribe,
-    updateSettings: (setting: Setting<SettingsStore>) => {
-      update((settingsStore) => {
-        const newStore = { ...settingsStore, ...setting };
-        localStorage.setItem(SETTINGS, JSON.stringify(newStore));
+
+    loadUser: (username: string) => {
+      currentUsername = username;
+      const savedSettings = localStorage.getItem(getStorageKey(username));
+
+      const initialState = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
+
+      set(initialState);
+    },
+
+    updateSettings: (setting: Partial<SettingsStore>) => {
+      update((state) => {
+        const newStore = { ...state, ...setting };
+
+        // Only persist if a user is actually loaded
+        if (currentUsername) {
+          localStorage.setItem(getStorageKey(currentUsername), JSON.stringify(newStore));
+        }
+
         return newStore;
       });
     },
+
     reset: () => {
-      localStorage.setItem(SETTINGS, JSON.stringify(defaultSettings));
       set(defaultSettings);
+      if (currentUsername) {
+        localStorage.setItem(getStorageKey(currentUsername), JSON.stringify(defaultSettings));
+      }
     }
   };
 };

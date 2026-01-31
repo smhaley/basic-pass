@@ -5,6 +5,7 @@ export type BasicPass = {
   createNewUserStore: (args: string[]) => Promise<void>;
   upsertUserStore: (args: string[]) => Promise<void>;
   getUserStore: (args: string[]) => Promise<string>;
+  deleteUserStore: (args: string[]) => Promise<string>;
 };
 
 declare global {

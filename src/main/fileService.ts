@@ -35,3 +35,12 @@ export const getUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promi
   }
   return await fs.promises.readFile(storePath, 'utf8');
 };
+
+export const deleteUserStore = async (_: IpcMainInvokeEvent, args: string[]): Promise<void> => {
+  const storePath = path.join(STORES, `${args[0].toLowerCase()}.aes`);
+
+  if (!fs.existsSync(storePath)) {
+    throw Error('user store does not exist');
+  }
+  return await fs.promises.unlink(storePath);
+};

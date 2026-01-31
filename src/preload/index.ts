@@ -9,7 +9,8 @@ if (process.contextIsolated) {
       edit: (args: string[]) => ipcRenderer.invoke('createDB', args),
       createNewUserStore: (args: string[]) => ipcRenderer.invoke('createNewUserStore', args),
       upsertUserStore: (args: string[]) => ipcRenderer.invoke('upsertUserStore', args),
-      getUserStore: (args: string[]) => ipcRenderer.invoke('getUserStore', args)
+      getUserStore: (args: string[]) => ipcRenderer.invoke('getUserStore', args),
+      deleteUserStore: (args: string[]) => ipcRenderer.invoke('deleteUserStore', args)
     });
   } catch (error) {
     console.error(error);

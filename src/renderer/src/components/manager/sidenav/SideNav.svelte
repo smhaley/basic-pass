@@ -11,7 +11,7 @@
   import Lock from 'svelte-material-icons/Lock.svelte';
   import TagFilter from './Filter.svelte';
   import NewSiteEntry from './NewSiteEntry.svelte';
-  import UpdatePass from './UpdatePass.svelte';
+  import UpdateAuth from './UpdateStoreAuth.svelte';
   import Export from './Export.svelte';
   import Import from './import/Import.svelte';
   import { appliedFilters, sideNavOpen } from '../../../stores/store';
@@ -62,10 +62,10 @@
   const sideNavigation = {
     filter: { component: TagFilter, label: 'Tag Filters' },
     newEntry: { component: NewSiteEntry, label: 'New Site Entry' },
-    account: { component: UpdatePass, label: 'Update Store Passphrase' },
+    account: { component: UpdateAuth, label: 'Update Store Auth' },
     export: { component: Export, label: 'Store Export' },
     import: { component: Import, label: 'Store Import' },
-    settings: { component: Settings, label: 'Settings' }
+    settings: { component: Settings, label: 'Store Settings' }
   };
 
   const handleIconClick = (icon: string) => {
@@ -96,8 +96,15 @@
       activeNavigation = null;
     }
   });
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isOpen) {
+      handleClose()
+    }
+  };
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
 <div
   on:keydown={sideNaveKeyActions}
   style={!$sideNavOpen && 'width: 70px'}

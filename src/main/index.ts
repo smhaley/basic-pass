@@ -2,8 +2,13 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
-
-import { createNewUserStore, upsertUserStore, getStoreList, getUserStore } from './fileService';
+import {
+  createNewUserStore,
+  upsertUserStore,
+  getStoreList,
+  getUserStore,
+  deleteUserStore
+} from './fileService';
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -22,6 +27,7 @@ function createWindow(): void {
   ipcMain.handle('upsertUserStore', upsertUserStore);
   ipcMain.handle('getStoreList', getStoreList);
   ipcMain.handle('getUserStore', getUserStore);
+  ipcMain.handle('deleteUserStore', deleteUserStore);
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
