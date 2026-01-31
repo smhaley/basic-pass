@@ -27,6 +27,7 @@ export const createSettingsStore = () => {
     subscribe,
     updateSettings: (setting: Setting<SettingsStore>) => {
       update((settingsStore) => {
+
         const newStore = { ...settingsStore, ...setting };
         localStorage.setItem(SETTINGS, JSON.stringify(newStore));
         return newStore;

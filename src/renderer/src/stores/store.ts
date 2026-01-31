@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { createUserStore } from './userStore';
 import { filterTableByTag, filterBySearch, sortBySite } from './utils';
@@ -14,6 +14,8 @@ export const tableSort: Writable<'ascending' | 'descending'> = writable('ascendi
 export const paginate = createPaginateStore();
 export const userStore = createUserStore();
 export const tableStore = createTableStore();
+// export const settingsStore = createSettingsStore();
+
 export const settingsStore = createSettingsStore();
 
 export const tableResults = derived(
@@ -56,6 +58,7 @@ const clearAuxStates = () => {
 export const logout = () => {
   userStore.logout();
   tableStore.destroyTable();
+  document.documentElement.setAttribute('data-theme', 'dark');
   clearAuxStates();
 };
 
